@@ -1,6 +1,5 @@
 package com.example.github.jptr2189.Naruto.client;
 import com.example.github.jptr2189.Naruto.NarutoApplication;
-import com.example.github.jptr2189.Naruto.response.LocationResponse;
 import com.example.github.jptr2189.Naruto.response.PersonagemResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,7 @@ public class NarutoClient {
 
 
     public NarutoClient(WebClient.Builder builder) {
-        webClient = builder.baseUrl("https://rickandmortyapi.com/api").build();
+        webClient = builder.baseUrl("https://narutodb.xyz/api/").build();
     }
 
 

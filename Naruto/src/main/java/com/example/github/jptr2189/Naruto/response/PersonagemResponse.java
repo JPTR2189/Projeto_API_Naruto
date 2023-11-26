@@ -11,11 +11,17 @@ public class PersonagemResponse {
 
     private String id;
     private String name;
-    private String status;
+    private String images;
+    private Objects debut;
+    private Objects personal;
+    private Objects family;
+    private Array jutsu;
+    private Array natureType;
+    private Array uniqueTraits;
+    private Objects voiceActors;
 
-    private String species;
-    private String image;
 
-    private List<String> episode;
+
+
 
 }
