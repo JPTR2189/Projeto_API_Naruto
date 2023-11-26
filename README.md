@@ -1,5 +1,8 @@
 ## Projeto_API_Naruto
 
+![characters](https://github.com/JPTR2189/Projeto_API_Naruto/assets/80178978/381606a3-bd70-4daf-b25c-8d38bd7d9249)
+
+
 > Status: Em Desenvolvimento  ⚠️
 
 ### Esse é um aplicativo Back-end com uma conexão API externa ao site https://narutodb.xyz/api com intuito de conhecermos um pouco mais dos personagens do univero Naruto. 🐱‍👤
