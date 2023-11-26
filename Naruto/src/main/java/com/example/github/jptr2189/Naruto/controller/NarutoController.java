@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+// Configurando o Controller
 @RestController
 @AllArgsConstructor
+// Define o endpoint de funcionamento da API
 @RequestMapping("/naruto")
 public class NarutoController {
 
     NarutoClient narutoClient;
 
+    // Define o endpoint para utilizar a função "getPersonagemById"
     @GetMapping("/{id}")
     public Mono<PersonagemResponse> getPersonagemById(@PathVariable String id) {
 

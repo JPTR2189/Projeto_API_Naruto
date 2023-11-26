@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
+// Configurando o Service
 @Service
 @Slf4j
 public class NarutoClient {
@@ -21,7 +22,7 @@ public class NarutoClient {
         webClient = builder.baseUrl("https://narutodb.xyz/api/").build();
     }
 
-
+// Da um GET na API externa e retorna as informações do personagem pelo ID
     public Mono<PersonagemResponse> getPersonagemById(String id) {
         log.info("Buscando o personagem com o id [{}]", id);
         return webClient
