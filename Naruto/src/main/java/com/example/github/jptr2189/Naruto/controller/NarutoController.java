@@ -20,10 +20,16 @@ public class NarutoController {
     NarutoClient narutoClient;
 
     // Define o endpoint para utilizar a função "getPersonagemById"
-    @GetMapping("/{id}")
-    public Mono<PersonagemResponse> getPersonagemById(@PathVariable String id) {
+    @GetMapping("/id={id}")
+    public Mono<String> getPersonagemById(@PathVariable String id) {
 
         return narutoClient.getPersonagemById(id);
+
+    }
+
+    @GetMapping("/name={name}")
+    public Mono<String> getPersonagemByName(@PathVariable String name){
+        return narutoClient.getPersonagemByName(name);
 
     }
 }
