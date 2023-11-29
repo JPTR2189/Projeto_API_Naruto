@@ -18,6 +18,7 @@
 + uniqueTraits (Array) ;
 + voiceActors (Objects) ;
 
+
 ## Tecnologias usadas 💻:
 
 <table>
@@ -42,12 +43,19 @@
   </tr>
 </table>
 
+
 ## Pré requisitos ⚙️:
 - Instalar o _**Java 17**_, por ventura se estiver a utilizar Linux ou Mac pode utilizar o
   <br>[SDK Man](https://sdkman.io/) para fazer a gestão de versões do _**Java**_;</br>
-- Instalar o _**Gradle 3.5 ou 4.1**_, por ventura se estiver a utilizar Linux ou Mac pode utilizar o
-  <br>[SDK Man](https://sdkman.io/) para fazer a gestão de versões do _**Gradle**_;</br>
+- Instalar o _**Maven 4.0.0 ou Superior**_, por ventura se estiver a utilizar Linux ou Mac pode utilizar o
+  <br>[SDK Man](https://sdkman.io/) para fazer a gestão de versões do _**Maven**_;</br>
 
-## Como rodar o programa:
+
+## Build 🔧:
+- Fazer o build da aplicação através do comando `mvn build`(_**Necessário ter o maven instalado**_) ou`./mvnw build`(Busca a partir do arquivo [maven-wrapper.properties](.mvn/wrapper/maven-wrapper.properties)).
+
+
+
+## Como rodar o programa ✅:
 1) Baixe e abra o código em IDE de sua preferência
 2) Incie o arquivo "Naruto Application"
