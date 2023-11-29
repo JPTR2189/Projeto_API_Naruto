@@ -7,7 +7,7 @@
 
 ### Esse é um aplicativo Back-end com uma conexão API externa ao site https://narutodb.xyz/api com intuito de conhecermos um pouco mais dos personagens do univero Naruto. 🐱‍👤
 
-## Chaves dos personagens:
+## Chaves dos personagens 🔑:
 + name (String) ; 
 + images (String) ; 
 + debut (Objects) ;
@@ -18,28 +18,35 @@
 + uniqueTraits (Array) ;
 + voiceActors (Objects) ;
 
-## Tecnologias usadas:
+## Tecnologias usadas 💻:
 
 <table>
   <tr>    
     <td>JDK</td>
+    <td>Maven</td>
     <td>Spring Boot</td>
     <td>Spring Web</td>
     <td>Spring Reactive Web</td>
     <td>Lombook</td>
-    <td>WebClient</td>  
+ 
   </tr>
       
 
   <tr>
     <td>17.*</td>
+    <td>4.0.0</td>
     <td>3.2.0</td>
     <td>6.1.1</td>
     <td>5.0.0</td>        
     <td>1.18.*</td>     
-    <td>5.0.0</td>
   </tr>
 </table>
+
+## Pré requisitos ⚙️:
+- Instalar o _**Java 17**_, por ventura se estiver a utilizar Linux ou Mac pode utilizar o
+  <br>[SDK Man](https://sdkman.io/) para fazer a gestão de versões do _**Java**_;</br>
+- Instalar o _**Gradle 3.5 ou 4.1**_, por ventura se estiver a utilizar Linux ou Mac pode utilizar o
+  <br>[SDK Man](https://sdkman.io/) para fazer a gestão de versões do _**Gradle**_;</br>
 
 ## Como rodar o programa:
 1) Baixe e abra o código em IDE de sua preferência
