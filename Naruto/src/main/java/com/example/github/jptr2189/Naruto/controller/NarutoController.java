@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 // Configurando o Controller
@@ -31,9 +30,9 @@ public class NarutoController {
             @ApiResponse(responseCode = "400", description = "ID inválido"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
     })
-
-    @GetMapping("/id={id}")
-    public Mono<String> getPersonagemById(@RequestParam(value = "id") String id) {
+    @GetMapping(value = "/id={id}")
+    public Mono<PersonagemResponse> getPersonagemById(@RequestParam(value = "id") String id)
+     {
 
         return narutoClient.getPersonagemById(id);
 
@@ -46,9 +45,8 @@ public class NarutoController {
             @ApiResponse(responseCode = "400", description = "'nome' inválido"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
     })
-
     @GetMapping("/name={name}")
-    public Mono<String> getPersonagemByName(@RequestParam(value = "name") String name){
+    public Mono<PersonagemResponse> getPersonagemByName(@RequestParam(value = "name") String name) {
         return narutoClient.getPersonagemByName(name);
 
     }
