@@ -57,5 +57,6 @@
 
 
 ## Como rodar o programa ✅:
-1) Baixe e abra o código em IDE de sua preferência
+1) Baixe e abra o código em uma IDE de sua preferência
 2) Incie o arquivo "Naruto Application"
+3) Teste as funções no endereço **http://localhost:8080/swagger-ui/index.html#/narutodb-api/**
