@@ -6,19 +6,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 
-public class Personal {
-    @JsonProperty("sex")
-    public String sex;
-    @JsonProperty("classification")
-    public String classification;
-    @JsonProperty("occupation")
-    public String occupation;
-    @JsonProperty("affiliation")
-    public ArrayList<String> affiliation;
+public class Family {
+    @JsonProperty("father")
+    public String father;
+    @JsonProperty("mother")
+    public String mother;
+    @JsonProperty("son")
+    public String son;
+    @JsonProperty("daughter")
+    public String daughter;
+    @JsonProperty("wife")
+    public String wife;
+    @JsonProperty("godfather")
+    public String godfather;
+
 }

@@ -35,5 +35,8 @@ public class PersonagemResponse {
     public ArrayList<String> tools;
     @JsonProperty("voiceActors")
     public VoiceActors voiceActors;
+    @JsonProperty("family")
+    public Family family;
+
 
 }
