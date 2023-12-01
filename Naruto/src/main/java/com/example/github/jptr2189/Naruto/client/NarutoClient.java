@@ -130,8 +130,6 @@ public class NarutoClient {
                 .onStatus(HttpStatusCode::is4xxClientError,
                         error -> Mono.error(new RuntimeException("Verifique os parâmetros informados")))
                 .bodyToFlux(PersonagemResponse.class);
-                //.flatMap(responseMap -> Mono.justOrEmpty(responseMap.get("personagemResponse")))
-                 //.cast(PersonagemResponse.class);
 
             personagensSalvos.addAll(personagem.collectList().block());
             return getPersonagensSalvos();
@@ -139,4 +137,26 @@ public class NarutoClient {
 
     }
 
+    // Remove o personagem com o 'ID' especificado da lista "personagensSalvos"
+
+    public List<PersonagemResponse> deletePersonagemById(String id){
+
+        log.info("Deletando personagem com o nome [{}]", id);
+
+
+
+                Iterator<PersonagemResponse> iterator = personagensSalvos.iterator();
+                while (iterator.hasNext()){
+
+                    PersonagemResponse personagem = iterator.next();
+                    String idUsuario = personagem.getId();
+
+                    if(idUsuario.equals(id))
+
+                            iterator.remove();
+                }
+
+                return getPersonagensSalvos();
+
+    }
 }
