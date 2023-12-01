@@ -13,23 +13,24 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.List;
 
-// Configurando o Controller
+// Configura a classe Controller
 @RestController
 @AllArgsConstructor
 
-// Define o endpoint de funcionamento da API
+// Define o endpoint na URL para utilizar a API
 
 @RequestMapping(value = "/naruto", produces = "application/json")
+
+// Adiciona uma tag de indentificação no Swagger
+
 @Tag(name ="narutodb-api")
 
 public class NarutoController {
 
-    @Getter
-    private final List<Mono<PersonagemResponse>> personagensSalvos = new ArrayList<>();
-
     NarutoClient narutoClient;
 
-    // Documenta a funcionalidade no Swagger
+    // Documenta a funcionalidade "getPersonagemById" no Swagger
+
     @Operation(summary = "Realiza a busca de dados de um personagem espicíficado pelo 'ID'", method = "GET")
 
     @ApiResponses(value = {
@@ -40,7 +41,7 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
     })
 
-    // Define o endpoint para utilizar a função "getPersonagemById"
+    // Define o endpoint na URL para utilizar a funcionalidade "getPersonagemById"
 
     @GetMapping(value = "/id={id}", produces = "application/json")
 
@@ -50,7 +51,7 @@ public class NarutoController {
 
     }
 
-    // Documenta a funcionalidade no Swagger
+    // Documenta a funcionalidade "getPersonagemByName" no Swagger
     @Operation(summary = "Realiza a busca de dados de um personagem específicado pelo 'nome'", method = "GET")
 
     @ApiResponses(value = {
@@ -61,7 +62,7 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
     })
 
-    // Define o endpoint para utilizar a função "getPersonagemByName"
+    // Define o endpoint na URL para utilizar a função "getPersonagemByName"
 
     @GetMapping(value = "/name={name}", produces = "application/json")
 
@@ -71,6 +72,7 @@ public class NarutoController {
 
     }
 
+    // Documenta a funcionalidade "postPersonagemByName" no Swagger
 
     @Operation(summary = "Salva os dados do personagem com o 'nome' específicado", method = "POST")
 
@@ -82,18 +84,19 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
 
-    //TODO ... implementar o metódo postPersonagemByName
-    
+    // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postPersonagemByName"
+
+
     @PostMapping("/post/name={name}")
 
-    public List<Mono<PersonagemResponse>> postPersonagemByName(@RequestBody PersonagemResponse personagem ) {
-        //personagensSalvos.add();
+    public List<PersonagemResponse> postPersonagemByName(@RequestBody PersonagemResponse personagem ) {
 
-        return getPersonagensSalvos();
+        return narutoClient.getPersonagensSalvos();
 
     }
 
-    @Operation(summary = "Salva os dados do personagem com o 'ID' específicado", method = "POST")
+    // Documenta a funcionalidade "postPersonagemById" no Swagger
+    @Operation(summary = "Salva os dados do personagem com o 'ID' específicado na lista 'personagensSalvos'", method = "POST")
 
     @ApiResponses(value = {
 
@@ -103,9 +106,12 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
 
+    // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postPersonagemById"
+
     @PostMapping("/post/id={id}")
 
-    public List<Mono<PersonagemResponse>> postPersonagemById(@RequestBody PersonagemResponse personagem, @RequestParam String id) {
+    public List<PersonagemResponse> postPersonagemById(@RequestBody PersonagemResponse personagem, @RequestParam String id) {
+
         return narutoClient.postPersonagemById(id);
 
     }
