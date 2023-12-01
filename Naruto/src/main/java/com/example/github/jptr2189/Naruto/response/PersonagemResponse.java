@@ -22,7 +22,7 @@ public class PersonagemResponse {
     @JsonProperty("personal")
     public Personal personal;
     @JsonProperty("id")
-    public String id;
+    public int id;
     @JsonProperty("name")
     public String name;
     @JsonProperty("images")
