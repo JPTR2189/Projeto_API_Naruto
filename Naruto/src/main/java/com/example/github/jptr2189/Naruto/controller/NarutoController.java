@@ -169,7 +169,7 @@ public class NarutoController {
 
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "cleanDelete"
 
-    @DeleteMapping("/delete/name={name}")
+    @DeleteMapping("/delete/all")
     public List<PersonagemResponse> cleanDelete(@RequestBody PersonagemResponse personagem){
 
         return narutoClient.cleanDelete();
