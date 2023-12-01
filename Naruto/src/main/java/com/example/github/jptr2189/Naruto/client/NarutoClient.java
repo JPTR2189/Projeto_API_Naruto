@@ -19,6 +19,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @Service
 @Slf4j
 
+
 public class NarutoClient {
     
     // Cria a lista para salvar os personagens pelos metódos "postPersonagemById" e "postPersonagemByName"
