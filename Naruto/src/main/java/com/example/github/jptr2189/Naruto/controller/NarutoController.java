@@ -123,14 +123,32 @@ public class NarutoController {
 
             @ApiResponse(responseCode = "200", description = "Personagem com o 'ID' espicíficado deletado"),
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "'ID' inválido"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
+    })
+
+    @DeleteMapping("/delete/id={id}")
+    public List<PersonagemResponse> deletePersonagemById(@RequestBody PersonagemResponse personagem ,@RequestParam String id){
+
+        return narutoClient.deletePersonagemById(id);
+
+    }
+
+    // Documenta a funcionalidade "deletePersonagemByName" no Swagger
+    @Operation(summary = "Deleta os dados do personagem com o 'nome' específicado na lista 'personagensSalvos'", method = "DELETE")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Personagem com o 'nome' espicíficado deletado"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "400", description = "'nome' inválido"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
 
-    @DeleteMapping("/delete/id{id}")
-    public List<PersonagemResponse> deletePersonagemById(@RequestBody PersonagemResponse personagem ,@RequestParam String id){
+    @DeleteMapping("/delete/name={name}")
+    public List<PersonagemResponse> deletePersonagemByName(@RequestBody PersonagemResponse personagem ,@RequestParam String name){
 
-        return narutoClient.deletePersonagemById(id);
+        return narutoClient.deletePersonagemByName(name);
 
     }
 

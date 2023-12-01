@@ -141,7 +141,7 @@ public class NarutoClient {
 
     public List<PersonagemResponse> deletePersonagemById(String id){
 
-        log.info("Deletando personagem com o nome [{}]", id);
+        log.info("Deletando personagem com o id [{}]", id);
 
 
 
@@ -157,6 +157,29 @@ public class NarutoClient {
                 }
 
                 return getPersonagensSalvos();
+
+    }
+
+    // Remove o personagem com o 'nome' especificado da lista 'personagensSalvos'
+
+    public List<PersonagemResponse> deletePersonagemByName(String name){
+
+        log.info("Deletando personagem com o nome [{}]", name);
+
+
+
+        Iterator<PersonagemResponse> iterator = personagensSalvos.iterator();
+        while (iterator.hasNext()){
+
+            PersonagemResponse personagem = iterator.next();
+            String idUsuario = personagem.getName();
+
+            if(idUsuario.equals(name))
+
+                iterator.remove();
+        }
+
+        return getPersonagensSalvos();
 
     }
 }
