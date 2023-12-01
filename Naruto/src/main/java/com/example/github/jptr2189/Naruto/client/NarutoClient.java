@@ -182,4 +182,17 @@ public class NarutoClient {
         return getPersonagensSalvos();
 
     }
+
+    // Limpa a lista "personagensSalvos"
+
+    public List<PersonagemResponse> cleanDelete(){
+
+        log.info("Lipando a lista");
+
+
+        personagensSalvos.removeAll(personagensSalvos);
+
+        return getPersonagensSalvos();
+
+    }
 }

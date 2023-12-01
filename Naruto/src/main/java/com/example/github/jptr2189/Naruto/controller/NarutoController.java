@@ -127,6 +127,7 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
 
+    // Configura o acesso do endpoint na URL para utilizar a funcionalidade "deletePersonagemById"
     @DeleteMapping("/delete/id={id}")
     public List<PersonagemResponse> deletePersonagemById(@RequestBody PersonagemResponse personagem ,@RequestParam String id){
 
@@ -145,10 +146,33 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
 
-    @DeleteMapping("/delete/name={name}")
-    public List<PersonagemResponse> deletePersonagemByName(@RequestBody PersonagemResponse personagem ,@RequestParam String name){
+    // Configura o acesso do endpoint na URL para utilizar a funcionalidade "deletePersonagemByName"
+
+    @DeleteMapping("/delete/all")
+    public List<PersonagemResponse> deletePersonagemByName(@RequestBody PersonagemResponse personagem, @RequestParam String name){
 
         return narutoClient.deletePersonagemByName(name);
+
+    }
+
+    // Documenta a funcionalidade "cleanDelete" no Swagger
+
+    @Operation(summary = "Da um clean na lista, limpando todos os personagens existentes nela", method = "DELETE")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Erro ao limpar a lista"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Erro no código"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar o clean da "),
+    })
+
+    // Configura o acesso do endpoint na URL para utilizar a funcionalidade "cleanDelete"
+
+    @DeleteMapping("/delete/name={name}")
+    public List<PersonagemResponse> cleanDelete(@RequestBody PersonagemResponse personagem){
+
+        return narutoClient.cleanDelete();
 
     }
 
