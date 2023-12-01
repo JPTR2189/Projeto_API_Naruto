@@ -31,7 +31,7 @@ public class NarutoController {
 
     // Documenta a funcionalidade "getPersonagemById" no Swagger
 
-    @Operation(summary = "Realiza a busca de dados de um personagem espicíficado pelo 'ID'", method = "GET")
+    @Operation(summary = "Realiza a busca de dados de um personagem espicíficado pelo 'ID' na API", method = "GET")
 
     @ApiResponses(value = {
 
@@ -52,7 +52,7 @@ public class NarutoController {
     }
 
     // Documenta a funcionalidade "getPersonagemByName" no Swagger
-    @Operation(summary = "Realiza a busca de dados de um personagem específicado pelo 'nome'", method = "GET")
+    @Operation(summary = "Realiza a busca de dados de um personagem específicado pelo 'nome' na API", method = "GET")
 
     @ApiResponses(value = {
 
@@ -74,7 +74,7 @@ public class NarutoController {
 
     // Documenta a funcionalidade "postPersonagemByName" no Swagger
 
-    @Operation(summary = "Salva os dados do personagem com o 'nome' específicado", method = "POST")
+    @Operation(summary = "Salva os dados do personagem com o 'nome' específicado na lista 'PersonagensSalvos'", method = "POST")
 
     @ApiResponses(value = {
 
@@ -89,9 +89,9 @@ public class NarutoController {
 
     @PostMapping("/post/name={name}")
 
-    public List<PersonagemResponse> postPersonagemByName(@RequestBody PersonagemResponse personagem ) {
+    public List<PersonagemResponse> postPersonagemByName(@RequestBody PersonagemResponse personagem, @RequestParam String name) {
 
-        return narutoClient.getPersonagensSalvos();
+        return narutoClient.postPersonagemByName(name);
 
     }
 
