@@ -32,15 +32,18 @@ public class NarutoClient {
 
     private final WebClient webClient;
 
+
     // Cria uma instância do "ObjectMapper" para dessiarilizar o JSON
 
     ObjectMapper objectMapper = new ObjectMapper();
 
+
     // Define o caminho padrão da API para ser utilizado nas operações envolvendo ela
 
     public NarutoClient(WebClient.Builder builder) {
-        webClient = builder.baseUrl("https://narutodb.xyz/api/").build();
+        webClient = builder.baseUrl("https://narutodb.xyz/api").build();
     }
+
 
     // Da um GET na API externa e retorna as informações do personagem pelo 'ID'
 
@@ -61,6 +64,7 @@ public class NarutoClient {
 
     }
 
+
     // Da um GET na API externa e retorna as informações do personagem pelo 'nome'
 
     public Mono<PersonagemResponse> getPersonagemByName(String name) {
@@ -77,6 +81,7 @@ public class NarutoClient {
                 .bodyToMono(String.class)
                 .map(this::converteJson);
     }
+
 
     // Converte o Json em um Objeto Java com o "ObjectMapper"
 
@@ -95,6 +100,7 @@ public class NarutoClient {
         }
 
     }
+
 
     // Faz um GET de um personagem pelo 'nome' na API e salva o resultado em uma lista (POST fake)
 
@@ -115,6 +121,7 @@ public class NarutoClient {
         return getPersonagensSalvos();
 
     }
+
 
     // Faz um GET de um personagem pelo 'ID' na API e salva o resultado em uma lista (POST fake)
 
@@ -137,13 +144,12 @@ public class NarutoClient {
 
     }
 
+
     // Remove o personagem com o 'ID' especificado da lista "personagensSalvos"
 
     public List<PersonagemResponse> deletePersonagemById(String id){
 
         log.info("Deletando personagem com o id [{}]", id);
-
-
 
                 Iterator<PersonagemResponse> iterator = personagensSalvos.iterator();
                 while (iterator.hasNext()){
@@ -160,13 +166,12 @@ public class NarutoClient {
 
     }
 
+
     // Remove o personagem com o 'nome' especificado da lista 'personagensSalvos'
 
     public List<PersonagemResponse> deletePersonagemByName(String name){
 
         log.info("Deletando personagem com o nome [{}]", name);
-
-
 
         Iterator<PersonagemResponse> iterator = personagensSalvos.iterator();
         while (iterator.hasNext()){
@@ -183,11 +188,12 @@ public class NarutoClient {
 
     }
 
+
     // Limpa a lista "personagensSalvos"
 
     public List<PersonagemResponse> cleanDelete(){
 
-        log.info("Lipando a lista");
+        log.info("Limpando a lista");
 
 
         personagensSalvos.removeAll(personagensSalvos);
