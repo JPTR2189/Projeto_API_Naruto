@@ -7,10 +7,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +88,7 @@ public class NarutoController {
             @ApiResponse(responseCode = "200", description = "Personagem com o 'nome' espicíficado salvo"),
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "400", description = "'nome' inválido"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
+            @ApiResponse(responseCode = "500", description = "Erro ao salvar o personagem"),
     })
 
 
@@ -105,15 +104,13 @@ public class NarutoController {
     }
 
 
-    // Documenta a funcionalidade "postPersonagemById" no Swagger
-    @Operation(summary = "Salva os dados do personagem com o 'ID' específicado na lista 'personagensSalvos'", method = "POST")
 
     @ApiResponses(value = {
 
             @ApiResponse(responseCode = "200", description = "Personagem com o 'ID' espicíficado salvo"),
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "400", description = "'ID' inválido"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
+            @ApiResponse(responseCode = "500", description = "Erro ao salvar o personagem"),
     })
 
 
@@ -124,6 +121,31 @@ public class NarutoController {
     public List<PersonagemResponse> postPersonagemById(@RequestBody PersonagemResponse personagem, @RequestParam String id) {
 
         return narutoClient.postPersonagemById(id);
+
+    }
+
+
+    // Documenta a funcionalidade "postNewPersonagem" no Swagger
+    
+    @Operation(summary = "Cria um novo personagem e salva na lista 'personagensSalvos'", method = "POST")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Personagem salvo"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos "),
+            @ApiResponse(responseCode = "500", description = "Erro ao salvar o personagem"),
+    })
+
+
+    // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postNewPersonagem"
+
+    @PostMapping("/post/new/{nome}/{id}/{sexo}/{idade}/{jutsu}/{TipoNatural}/{Ferramentas}")
+
+    public List<PersonagemResponse> postNewPersonagem(@RequestBody PersonagemResponse personagem, @RequestParam String nome, @RequestParam String id, @RequestParam String sexo, @RequestParam String idade,
+                                                      @RequestParam ArrayList<String> jutsu , @RequestParam ArrayList<String> tipoNatural, @RequestParam ArrayList<String> ferramentas) {
+
+        return narutoClient.postNewPersonagem(nome, id, sexo, idade, jutsu, tipoNatural, ferramentas);
 
     }
 
