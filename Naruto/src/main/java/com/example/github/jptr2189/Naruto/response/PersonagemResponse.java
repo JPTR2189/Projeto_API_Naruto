@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // Define um DTO para armazenar os dados recebidos da API externa
@@ -15,28 +16,20 @@ import java.util.ArrayList;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 
-public class PersonagemResponse {
+public class PersonagemResponse implements Serializable {
 
-    @JsonProperty("debut")
-    public Debut debut;
-    @JsonProperty("personal")
-    public Personal personal;
-    @JsonProperty("id")
-    public String id;
     @JsonProperty("name")
     public String name;
-    @JsonProperty("images")
-    public ArrayList<String> images;
+    @JsonProperty("id")
+    public String id;
+    @JsonProperty("personal")
+    public Personal personal;
     @JsonProperty("jutsu")
     public ArrayList<String> jutsu;
     @JsonProperty("natureType")
     public ArrayList<String> natureType;
     @JsonProperty("tools")
     public ArrayList<String> tools;
-    @JsonProperty("voiceActors")
-    public VoiceActors voiceActors;
-    @JsonProperty("family")
-    public Family family;
 
 
 }

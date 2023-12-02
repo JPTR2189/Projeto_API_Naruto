@@ -6,19 +6,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 
-public class Personal {
+public class Personal implements Serializable {
+
+
     @JsonProperty("sex")
     public String sex;
-    @JsonProperty("classification")
-    public String classification;
-    @JsonProperty("occupation")
-    public String occupation;
-    @JsonProperty("affiliation")
-    public ArrayList<String> affiliation;
+    @JsonProperty("age")
+    public String age;
 }
