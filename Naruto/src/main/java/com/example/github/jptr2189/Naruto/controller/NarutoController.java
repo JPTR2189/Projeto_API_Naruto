@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import java.util.ArrayList;
@@ -17,9 +18,11 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 
+
 // Define o endpoint na URL para utilizar a API
 
 @RequestMapping(value = "/naruto", produces = "application/json")
+
 
 // Adiciona uma tag de indentificação no Swagger
 
@@ -41,6 +44,7 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
     })
 
+
     // Define o endpoint na URL para utilizar a funcionalidade "getPersonagemById"
 
     @GetMapping(value = "/id={id}", produces = "application/json")
@@ -50,6 +54,7 @@ public class NarutoController {
         return narutoClient.getPersonagemById(id);
 
     }
+
 
     // Documenta a funcionalidade "getPersonagemByName" no Swagger
     @Operation(summary = "Realiza a busca de dados de um personagem específicado pelo 'nome' na API", method = "GET")
@@ -62,6 +67,7 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
     })
 
+
     // Define o endpoint na URL para utilizar a função "getPersonagemByName"
 
     @GetMapping(value = "/name={name}", produces = "application/json")
@@ -71,6 +77,8 @@ public class NarutoController {
         return narutoClient.getPersonagemByName(name);
 
     }
+
+
 
     // Documenta a funcionalidade "postPersonagemByName" no Swagger
 
@@ -84,6 +92,7 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postPersonagemByName"
 
 
@@ -94,6 +103,7 @@ public class NarutoController {
         return narutoClient.postPersonagemByName(name);
 
     }
+
 
     // Documenta a funcionalidade "postPersonagemById" no Swagger
     @Operation(summary = "Salva os dados do personagem com o 'ID' específicado na lista 'personagensSalvos'", method = "POST")
@@ -106,6 +116,7 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postPersonagemById"
 
     @PostMapping("/post/id={id}")
@@ -115,6 +126,7 @@ public class NarutoController {
         return narutoClient.postPersonagemById(id);
 
     }
+
 
     // Documenta a funcionalidade "deletePersonagemById" no Swagger
     @Operation(summary = "Deleta os dados do personagem com o 'ID' específicado na lista 'personagensSalvos'", method = "DELETE")
@@ -127,12 +139,15 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
 
+
+    // Configura o acesso do endpoint na URL para utilizar a funcionalidade "deletePersonagemById"
     @DeleteMapping("/delete/id={id}")
     public List<PersonagemResponse> deletePersonagemById(@RequestBody PersonagemResponse personagem ,@RequestParam String id){
 
         return narutoClient.deletePersonagemById(id);
 
     }
+
 
     // Documenta a funcionalidade "deletePersonagemByName" no Swagger
     @Operation(summary = "Deleta os dados do personagem com o 'nome' específicado na lista 'personagensSalvos'", method = "DELETE")
@@ -145,10 +160,36 @@ public class NarutoController {
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
 
-    @DeleteMapping("/delete/name={name}")
-    public List<PersonagemResponse> deletePersonagemByName(@RequestBody PersonagemResponse personagem ,@RequestParam String name){
+
+    // Configura o acesso do endpoint na URL para utilizar a funcionalidade "deletePersonagemByName"
+
+    @DeleteMapping("/delete/name{name}")
+    public List<PersonagemResponse> deletePersonagemByName(@RequestBody PersonagemResponse personagem, @RequestParam String name){
 
         return narutoClient.deletePersonagemByName(name);
+
+    }
+
+
+    // Documenta a funcionalidade "cleanDelete" no Swagger
+
+    @Operation(summary = "Da um clean na lista, limpando todos os personagens existentes nela", method = "DELETE")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Erro ao limpar a lista"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Erro no código"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar o clean da "),
+    })
+
+
+    // Configura o acesso do endpoint na URL para utilizar a funcionalidade "cleanDelete"
+
+    @DeleteMapping("/delete/all")
+    public List<PersonagemResponse> cleanDelete(@RequestBody PersonagemResponse personagem){
+
+        return narutoClient.cleanDelete();
 
     }
 
