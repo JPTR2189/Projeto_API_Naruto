@@ -30,7 +30,10 @@ import java.util.List;
 
 public class NarutoController {
 
+    // Chama a "Client" para dentro da "Controller"
+
     NarutoClient narutoClient;
+
 
     // Documenta a funcionalidade "getPersonagemById" no Swagger
 
@@ -78,6 +81,27 @@ public class NarutoController {
 
     }
 
+    // Documenta a funcionalidade getAllPersonagens" no Swagger
+
+    @Operation(summary = "Busca os dados de todos os personagens", method = "GET")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Requisição efetuada com exito"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "500", description = "Erro ao fazer a requisição"),
+    })
+
+
+    // Define o endpoint na URL para utilizar a função "getAllPersonagens"
+
+    @GetMapping(value = "/all", produces = "application/json")
+
+    public Mono<String> getAllPersonagens() {
+
+        return narutoClient.getAllPersonagens();
+
+    }
 
 
     // Documenta a funcionalidade "postPersonagemByName" no Swagger
@@ -141,6 +165,7 @@ public class NarutoController {
 
 
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "deletePersonagemById"
+
     @DeleteMapping("/delete/id={id}")
     public List<PersonagemResponse> deletePersonagemById(@RequestBody PersonagemResponse personagem ,@RequestParam String id){
 
@@ -150,6 +175,7 @@ public class NarutoController {
 
 
     // Documenta a funcionalidade "deletePersonagemByName" no Swagger
+
     @Operation(summary = "Deleta os dados do personagem com o 'nome' específicado na lista 'personagensSalvos'", method = "DELETE")
 
     @ApiResponses(value = {
@@ -177,10 +203,9 @@ public class NarutoController {
 
     @ApiResponses(value = {
 
-            @ApiResponse(responseCode = "200", description = "Erro ao limpar a lista"),
+            @ApiResponse(responseCode = "200", description = "Lista limpada com éxito"),
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Erro no código"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar o clean da "),
+            @ApiResponse(responseCode = "500", description = "Erro ao limpar a lista"),
     })
 
 
