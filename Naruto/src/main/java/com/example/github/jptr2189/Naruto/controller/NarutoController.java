@@ -126,7 +126,7 @@ public class NarutoController {
 
 
     // Documenta a funcionalidade "postNewPersonagem" no Swagger
-    
+
     @Operation(summary = "Cria um novo personagem e salva na lista 'personagensSalvos'", method = "POST")
 
     @ApiResponses(value = {
