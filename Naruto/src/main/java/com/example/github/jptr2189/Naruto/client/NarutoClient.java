@@ -89,6 +89,24 @@ public class NarutoClient {
     }
 
 
+    // Da um GET na API externa e retorna as informações dos 20 primeiros personagens
+
+    public Mono<String> getAllPersonagens() {
+
+        log.info("Buscando todos os personagens");
+
+        return webClient
+                .get()
+                .uri("/character")
+                .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError,
+                        error -> Mono.error(new RuntimeException("Verifique o caminho do endpoint")))
+                .bodyToMono(String.class);
+
+
+    }
+
+
     // Converte o Json em um Objeto Java com o "ObjectMapper"
 
     public PersonagemResponse converteJson(String jsonString) {
