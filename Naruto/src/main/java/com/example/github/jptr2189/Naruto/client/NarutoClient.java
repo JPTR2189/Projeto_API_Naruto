@@ -110,7 +110,7 @@ public class NarutoClient {
 
     // Faz um GET de um personagem pelo 'nome' na API e salva o resultado em uma lista (POST fake)
 
-    public List<PersonagemResponse> postPersonagemByName(String name){
+    public List<PersonagemResponse> postPersonagemByName(String name) {
 
         log.info("Salvando personagem com o nome [{}]", name);
 
@@ -131,11 +131,11 @@ public class NarutoClient {
 
     // Faz um GET de um personagem pelo 'ID' na API e salva o resultado em uma lista (POST fake)
 
-    public List<PersonagemResponse> postPersonagemById (String id){
+    public List<PersonagemResponse> postPersonagemById(String id) {
 
         log.info("Salvando personagem com o id [{}]", id);
 
-         Flux<PersonagemResponse> personagem = webClient
+        Flux<PersonagemResponse> personagem = webClient
                 .get()
                 .uri("/character/" + id)
                 .accept(APPLICATION_JSON)
@@ -144,8 +144,8 @@ public class NarutoClient {
                         error -> Mono.error(new RuntimeException("Verifique os parâmetros informados")))
                 .bodyToFlux(PersonagemResponse.class);
 
-            personagensSalvos.addAll(personagem.collectList().block());
-            return getPersonagensSalvos();
+        personagensSalvos.addAll(personagem.collectList().block());
+        return getPersonagensSalvos();
 
 
     }
@@ -171,9 +171,15 @@ public class NarutoClient {
         personagem.setNatureType(TipoNatural);
         personagem.setTools(Ferramentas);
 
-        personagensSalvos.add(personagem);
+        if (Integer.parseInt(personagem.getId()) > 1600) {
+            personagensSalvos.add(personagem);
+        }
         return getPersonagensSalvos();
     }
+
+
+
+
 
 
 

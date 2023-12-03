@@ -142,10 +142,10 @@ public class NarutoController {
 
     @PostMapping("/post/new/{nome}/{id}/{sexo}/{idade}/{jutsu}/{TipoNatural}/{Ferramentas}")
 
-    public List<PersonagemResponse> postNewPersonagem(@RequestBody PersonagemResponse personagem, @RequestParam String nome, @RequestParam String id, @RequestParam String sexo, @RequestParam String idade,
+    public List<PersonagemResponse> postNewPersonagem(@RequestBody PersonagemResponse personagem, @RequestParam String nome, @RequestParam String A_Partir_de_1601, @RequestParam String sexo, @RequestParam String idade,
                                                       @RequestParam ArrayList<String> jutsu , @RequestParam ArrayList<String> tipoNatural, @RequestParam ArrayList<String> ferramentas) {
 
-        return narutoClient.postNewPersonagem(nome, id, sexo, idade, jutsu, tipoNatural, ferramentas);
+        return narutoClient.postNewPersonagem(nome, A_Partir_de_1601, sexo, idade, jutsu, tipoNatural, ferramentas);
 
     }
 
