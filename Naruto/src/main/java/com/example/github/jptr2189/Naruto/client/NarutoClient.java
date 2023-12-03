@@ -51,6 +51,7 @@ public class NarutoClient {
     }
 
 
+
     // Da um GET na API externa e retorna as informações do personagem pelo 'ID'
 
     public Mono<PersonagemResponse> getPersonagemById(String id) {
@@ -71,6 +72,7 @@ public class NarutoClient {
     }
 
 
+
     // Da um GET na API externa e retorna as informações do personagem pelo 'nome'
 
     public Mono<PersonagemResponse> getPersonagemByName(String name) {
@@ -87,6 +89,7 @@ public class NarutoClient {
                 .bodyToMono(String.class)
                 .map(this::converteJson);
     }
+
 
 
     // Da um GET na API externa e retorna as informações dos 20 primeiros personagens
@@ -107,6 +110,7 @@ public class NarutoClient {
     }
 
 
+
     // Converte o Json em um Objeto Java com o "ObjectMapper"
 
     public PersonagemResponse converteJson(String jsonString) {
@@ -124,6 +128,7 @@ public class NarutoClient {
         }
 
     }
+
 
 
     // Faz um GET de um personagem pelo 'nome' na API e salva o resultado em uma lista (POST fake)
@@ -147,6 +152,7 @@ public class NarutoClient {
     }
 
 
+
     // Faz um GET de um personagem pelo 'ID' na API e salva o resultado em uma lista (POST fake)
 
     public List<PersonagemResponse> postPersonagemById(String id) {
@@ -168,11 +174,12 @@ public class NarutoClient {
 
     }
 
+
+
     // Cria um novo personagem e salve ele em uma lista (POST fake)
 
     public List<PersonagemResponse> postNewPersonagem(String nome, String id, String sexo, String idade,
                                                       ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
-
 
         log.info("Salvando personagem novo");
 
@@ -194,10 +201,6 @@ public class NarutoClient {
         }
         return getPersonagensSalvos();
     }
-
-
-
-
 
 
 
@@ -223,6 +226,7 @@ public class NarutoClient {
     }
 
 
+
     // Remove o personagem com o 'nome' especificado da lista 'personagensSalvos'
 
     public List<PersonagemResponse> deletePersonagemByName(String name){
@@ -243,6 +247,7 @@ public class NarutoClient {
         return getPersonagensSalvos();
 
     }
+
 
 
     // Limpa a lista "personagensSalvos"

@@ -27,6 +27,7 @@ import java.util.List;
 
 @Tag(name ="narutodb-api")
 
+
 public class NarutoController {
 
     // Chama a "Client" para dentro da "Controller"
@@ -47,6 +48,7 @@ public class NarutoController {
     })
 
 
+
     // Define o endpoint na URL para utilizar a funcionalidade "getPersonagemById"
 
     @GetMapping(value = "/id={id}", produces = "application/json")
@@ -56,6 +58,7 @@ public class NarutoController {
         return narutoClient.getPersonagemById(id);
 
     }
+
 
 
     // Documenta a funcionalidade "getPersonagemByName" no Swagger
@@ -70,6 +73,7 @@ public class NarutoController {
     })
 
 
+
     // Define o endpoint na URL para utilizar a função "getPersonagemByName"
 
     @GetMapping(value = "/name={name}", produces = "application/json")
@@ -79,6 +83,8 @@ public class NarutoController {
         return narutoClient.getPersonagemByName(name);
 
     }
+
+
 
     // Documenta a funcionalidade getAllPersonagens" no Swagger
 
@@ -92,6 +98,7 @@ public class NarutoController {
     })
 
 
+
     // Define o endpoint na URL para utilizar a função "getAllPersonagens"
 
     @GetMapping(value = "/all", produces = "application/json")
@@ -101,6 +108,7 @@ public class NarutoController {
         return narutoClient.getAllPersonagens();
 
     }
+
 
 
     // Documenta a funcionalidade "postPersonagemByName" no Swagger
@@ -114,6 +122,7 @@ public class NarutoController {
             @ApiResponse(responseCode = "400", description = "'nome' inválido"),
             @ApiResponse(responseCode = "500", description = "Erro ao salvar o personagem"),
     })
+
 
 
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postPersonagemByName"
@@ -138,6 +147,7 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postPersonagemById"
 
     @PostMapping("/post/id={id}")
@@ -147,6 +157,7 @@ public class NarutoController {
         return narutoClient.postPersonagemById(id);
 
     }
+
 
 
     // Documenta a funcionalidade "postNewPersonagem" no Swagger
@@ -162,6 +173,7 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postNewPersonagem"
 
     @PostMapping("/post/new/{nome}/{id}/{sexo}/{idade}/{jutsu}/{TipoNatural}/{Ferramentas}")
@@ -172,6 +184,7 @@ public class NarutoController {
         return narutoClient.postNewPersonagem(nome, A_Partir_de_1601, sexo, idade, jutsu, tipoNatural, ferramentas);
 
     }
+
 
 
     // Documenta a funcionalidade "deletePersonagemById" no Swagger
@@ -186,6 +199,7 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "deletePersonagemById"
 
     @DeleteMapping("/delete/id={id}")
@@ -194,6 +208,7 @@ public class NarutoController {
         return narutoClient.deletePersonagemById(id);
 
     }
+
 
 
     // Documenta a funcionalidade "deletePersonagemByName" no Swagger
@@ -209,6 +224,7 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "deletePersonagemByName"
 
     @DeleteMapping("/delete/name{name}")
@@ -217,6 +233,7 @@ public class NarutoController {
         return narutoClient.deletePersonagemByName(name);
 
     }
+
 
 
     // Documenta a funcionalidade "cleanDelete" no Swagger
@@ -231,6 +248,7 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "cleanDelete"
 
     @DeleteMapping("/delete/all")
@@ -239,5 +257,4 @@ public class NarutoController {
         return narutoClient.cleanDelete();
 
     }
-
 }
