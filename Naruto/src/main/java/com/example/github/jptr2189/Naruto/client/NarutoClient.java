@@ -111,6 +111,31 @@ public class NarutoClient {
 
 
 
+    // Da um GET na Lista "personagensSalvos" e retorna as informações do personagem pelo 'ID'
+
+    public PersonagemResponse getPersonagemFromListById(String id) {
+
+        log.info("Buscando o personagem com o id [{}] na lista", id);
+
+        PersonagemResponse personagemErro = new PersonagemResponse();
+
+        for(PersonagemResponse personagem:personagensSalvos){
+
+            String idAtual = personagem.getId();
+
+            if(idAtual.equals(id)){
+
+                return personagem;
+            }
+
+        }
+
+        return personagemErro;
+
+    }
+
+
+
     // Converte o Json em um Objeto Java com o "ObjectMapper"
 
     public PersonagemResponse converteJson(String jsonString) {

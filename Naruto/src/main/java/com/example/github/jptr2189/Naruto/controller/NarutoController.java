@@ -111,6 +111,31 @@ public class NarutoController {
 
 
 
+    // Documenta a funcionalidade "getPersonagemFromListById" no Swagger
+
+    @Operation(summary = "Realiza a busca dos dados de um personagem espicíficado pelo 'ID' na Lista", method = "GET")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Personagem com o 'ID' espicíficado encontrado"),
+            @ApiResponse(responseCode = "400", description = "ID inválido"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
+    })
+
+
+
+    // Define o endpoint para utilizar a função "getPersonagemFromListById"
+
+    @GetMapping(value = "/list/get", produces = "application/json")
+
+    public PersonagemResponse getPersonagemFromListById(@RequestParam String id){
+
+        return narutoClient.getPersonagemFromListById(id);
+
+    }
+
+
+
     // Documenta a funcionalidade "postPersonagemByName" no Swagger
 
     @Operation(summary = "Salva os dados do personagem com o 'nome' específicado na lista 'PersonagensSalvos'", method = "POST")
@@ -178,10 +203,10 @@ public class NarutoController {
 
     @PostMapping("/post/new/{nome}/{id}/{sexo}/{idade}/{jutsu}/{TipoNatural}/{Ferramentas}")
 
-    public List<PersonagemResponse> postNewPersonagem(@RequestBody PersonagemResponse personagem, @RequestParam String nome, @RequestParam String A_Partir_de_1601, @RequestParam String sexo, @RequestParam String idade,
+    public List<PersonagemResponse> postNewPersonagem(@RequestBody PersonagemResponse personagem, @RequestParam String nome, @RequestParam String id, @RequestParam String sexo, @RequestParam String idade,
                                                       @RequestParam ArrayList<String> jutsu , @RequestParam ArrayList<String> tipoNatural, @RequestParam ArrayList<String> ferramentas) {
 
-        return narutoClient.postNewPersonagem(nome, A_Partir_de_1601, sexo, idade, jutsu, tipoNatural, ferramentas);
+        return narutoClient.postNewPersonagem(nome, id, sexo, idade, jutsu, tipoNatural, ferramentas);
 
     }
 
