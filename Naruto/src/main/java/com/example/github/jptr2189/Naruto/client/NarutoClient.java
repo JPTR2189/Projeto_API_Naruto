@@ -1,27 +1,31 @@
 package com.example.github.jptr2189.Naruto.client;
-
 import com.example.github.jptr2189.Naruto.response.PersonagemResponse;
+import com.example.github.jptr2189.Naruto.response.Personal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 // Configura a classe Client
 @Service
 @Slf4j
-
+@RequiredArgsConstructor
 
 public class NarutoClient {
-    
+
     // Cria a lista para salvar os personagens pelos metódos "postPersonagemById" e "postPersonagemByName"
 
     @Getter
@@ -39,6 +43,8 @@ public class NarutoClient {
 
 
     // Define o caminho padrão da API para ser utilizado nas operações envolvendo ela
+
+    @Autowired
 
     public NarutoClient(WebClient.Builder builder) {
         webClient = builder.baseUrl("https://narutodb.xyz/api").build();
@@ -104,7 +110,7 @@ public class NarutoClient {
 
     // Faz um GET de um personagem pelo 'nome' na API e salva o resultado em uma lista (POST fake)
 
-    public List<PersonagemResponse> postPersonagemByName(String name){
+    public List<PersonagemResponse> postPersonagemByName(String name) {
 
         log.info("Salvando personagem com o nome [{}]", name);
 
@@ -125,11 +131,11 @@ public class NarutoClient {
 
     // Faz um GET de um personagem pelo 'ID' na API e salva o resultado em uma lista (POST fake)
 
-    public List<PersonagemResponse> postPersonagemById (String id){
+    public List<PersonagemResponse> postPersonagemById(String id) {
 
         log.info("Salvando personagem com o id [{}]", id);
 
-         Flux<PersonagemResponse> personagem = webClient
+        Flux<PersonagemResponse> personagem = webClient
                 .get()
                 .uri("/character/" + id)
                 .accept(APPLICATION_JSON)
@@ -138,11 +144,43 @@ public class NarutoClient {
                         error -> Mono.error(new RuntimeException("Verifique os parâmetros informados")))
                 .bodyToFlux(PersonagemResponse.class);
 
-            personagensSalvos.addAll(personagem.collectList().block());
-            return getPersonagensSalvos();
+        personagensSalvos.addAll(personagem.collectList().block());
+        return getPersonagensSalvos();
 
 
     }
+
+    // Cria um novo personagem e salve ele em uma lista (POST fake)
+
+    public List<PersonagemResponse> postNewPersonagem(String nome, String id, String sexo, String idade,
+                                                      ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
+
+
+        log.info("Salvando personagem novo");
+
+        PersonagemResponse personagem = new PersonagemResponse();
+        Personal personal = new Personal();
+        personagem.setPersonal(personal);
+
+
+        personagem.setId(id);
+        personagem.setName(nome);
+        personal.setSex(sexo);
+        personal.setAge(idade);
+        personagem.setJutsu(jutsu);
+        personagem.setNatureType(TipoNatural);
+        personagem.setTools(Ferramentas);
+
+        if (Integer.parseInt(personagem.getId()) > 1600) {
+            personagensSalvos.add(personagem);
+        }
+        return getPersonagensSalvos();
+    }
+
+
+
+
+
 
 
     // Remove o personagem com o 'ID' especificado da lista "personagensSalvos"
