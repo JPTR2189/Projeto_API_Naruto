@@ -60,7 +60,6 @@ public class NarutoClient {
     }
 
 
-
     // Da um GET na API externa e retorna as informações do personagem pelo 'ID'
 
     public Mono<PersonagemResponse> getPersonagemById(int id) {
@@ -70,26 +69,26 @@ public class NarutoClient {
 
             return webClient
                     .get()
-                    .uri("/character/" + id)
+                    .uri("/character/{id}", id)
                     .accept(APPLICATION_JSON)
                     .retrieve()
-                    .onStatus(HttpStatusCode::is4xxClientError, response -> {
+                    .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> {
 
-                        if (response.statusCode() == HttpStatus.NOT_FOUND) {
+                        if (clientResponse.statusCode() == HttpStatus.NOT_FOUND) {
 
                             return Mono.error(new PersonagemNaoEncontradoException("Personagem com o id [" + id + "] não encontrado"));
 
-                        } else {
+                        }
+                        else {
 
                             return Mono.error(new RuntimeException("Verifique os parâmetros informados"));
 
                         }
                     })
                     .bodyToMono(String.class)
-                   .map(this::converteJson);
-        }
+                    .map(this::converteJson);
 
-
+    }
 
 
     // Da um GET na API externa e retorna as informações do personagem pelo 'nome'
@@ -121,7 +120,6 @@ public class NarutoClient {
     }
 
 
-
     // Da um GET na API externa e retorna as informações dos personagens especifícados pelos parâmetros "page" e "size"
 
     public Mono<String> getAllPersonagens(int page, int size) {
@@ -151,7 +149,6 @@ public class NarutoClient {
     }
 
 
-
     // Da um GET na Lista "personagensSalvos" e retorna as informações do personagem pelo 'ID'
 
     public PersonagemResponse getPersonagemFromListById(int id) {
@@ -174,7 +171,6 @@ public class NarutoClient {
         return personagemErro;
 
     }
-
 
 
     // Da um GET na Lista "personagensSalvos" e retorna as informações do personagem pelo 'nome'
@@ -202,7 +198,6 @@ public class NarutoClient {
     }
 
 
-
     // Converte o Json em um Objeto Java com o "ObjectMapper"
 
     public PersonagemResponse converteJson(String jsonString) {
@@ -222,7 +217,6 @@ public class NarutoClient {
         }
 
     }
-
 
 
     // Faz um GET de um personagem pelo 'nome' na API e salva o resultado em uma lista (POST fake)
@@ -256,7 +250,6 @@ public class NarutoClient {
         return getPersonagensSalvos();
 
     }
-
 
 
     // Faz um GET de um personagem pelo 'ID' na API e salva o resultado em uma lista (POST fake)
@@ -293,7 +286,6 @@ public class NarutoClient {
     }
 
 
-
     // Cria um novo personagem e salve ele em uma lista (POST fake)
 
     public List<PersonagemResponse> postNewPersonagem(String nome, int id, String sexo, int idade, String clan,
@@ -319,10 +311,14 @@ public class NarutoClient {
 
             personagensSalvos.add(personagem);
 
+        } else {
+
+            throw new PersonagemNaoEncontradoException("Não foi possível editar o personagem, pois já existe um personagem com o ID [" + id + "] ");
+
+
         }
         return getPersonagensSalvos();
     }
-
 
 
     // Remove o personagem com o 'ID' especificado da lista "personagensSalvos"
@@ -349,7 +345,6 @@ public class NarutoClient {
     }
 
 
-
     // Remove o personagem com o 'nome' especificado da lista 'personagensSalvos'
 
     public List<PersonagemResponse> deletePersonagemByName(String nome) {
@@ -373,7 +368,6 @@ public class NarutoClient {
     }
 
 
-
     // Limpa a lista "personagensSalvos"
 
     public List<PersonagemResponse> cleanDelete() {
@@ -385,7 +379,6 @@ public class NarutoClient {
         return getPersonagensSalvos();
 
     }
-
 
 
     // Edita um personagem especifícado pelo "ID" na lista 'personagensSalvos'
@@ -426,7 +419,6 @@ public class NarutoClient {
     }
 
 
-
     // Edita um personagem especifícado pelo "nome" na lista 'personagensSalvos'
 
     public List<PersonagemResponse> putPersonagemByName(String nome, int id, String sexo, int idade, String clan,
@@ -442,9 +434,13 @@ public class NarutoClient {
 
                 personagemAtual.setName(nome);
 
-                if (id > 1429)
+                if (id > 1429) {
                     personagemAtual.setId(id);
-
+                }
+                else {
+                    
+                    throw new PersonagemNaoEncontradoException("Não foi possível editar o personagem, pois já existe um personagem com o ID [" + id + "] ");
+                }
 
                 Personal personal = personagemAtual.getPersonal();
 

@@ -15,23 +15,25 @@ import java.util.Date;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(PersonagemNaoEncontradoException.class)
+        @ExceptionHandler(PersonagemNaoEncontradoException.class)
+        protected ResponseEntity<Object> handlePersonagemNaoEncontradoException(
+                PersonagemNaoEncontradoException ex, WebRequest request) {
 
-    protected ResponseEntity<Object> handlePersonagemNaoEncontradoException(
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.setTimestamp(new Date());
+            errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+            errorResponse.setError(HttpStatus.NOT_FOUND.getReasonPhrase());
+            errorResponse.setMessage(ex.getMessage());
+            errorResponse.setPath(request.getDescription(false));
 
-            PersonagemNaoEncontradoException ex, WebRequest request) {
+            return handleExceptionInternal(
+                    ex, errorResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+        }
 
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setTimestamp(new Date());
-        errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
-        errorResponse.setError(HttpStatus.NOT_FOUND.getReasonPhrase());
-        errorResponse.setMessage(ex.getMessage());
-        errorResponse.setPath(request.getDescription(false));
-
-        return handleExceptionInternal(
-
-                ex, errorResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-
-    }
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<String> handleInternalServerError(Exception ex) {
+            String mensagemErro = "Ocorreu um erro interno no servidor: " + ex.getMessage();
+            return new ResponseEntity<>(mensagemErro, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 }
 
