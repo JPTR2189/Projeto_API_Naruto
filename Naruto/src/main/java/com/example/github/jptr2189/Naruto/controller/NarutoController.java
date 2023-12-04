@@ -108,45 +108,7 @@ public class NarutoController {
         return narutoClient.getAllPersonagens(pagina, tamanho);
 
     }
-
-
-
-    // Documenta a funcionalidade getAllPersonagensFromList" no Swagger
-
-    @Operation(summary = "Busca os dados dos personagens da lista de acordo com os parâmetros informados", method = "GET")
-
-    @ApiResponses(value = {
-
-            @ApiResponse(responseCode = "200", description = "Busca na lista efetuada com exito"),
-            @ApiResponse(responseCode = "422", description = "Parâmetros inválidos"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca na lista"),
-    })
-
-
-
-    // Define o endpoint na URL para utilizar a função "getAllPersonagensFromList"
-
-    @GetMapping(value = "/list/all", produces = "application/json")
-
-    public List<PersonagemResponse> getAllPersonagensFromList(@RequestParam (defaultValue = "") int inicio, @RequestParam (defaultValue = "") int fim){
-
-        return narutoClient.getAllPersonagensFromList(inicio, fim);
-
-    }
-
-
-
-    // Documenta a funcionalidade "getPersonagemFromListById" no Swagger
-
-    @Operation(summary = "Realiza a busca dos dados de um personagem específicado pelo 'ID' na lista 'personagensSalvos'", method = "GET")
-
-    @ApiResponses(value = {
-
-            @ApiResponse(responseCode = "200", description = "Personagem com o 'ID' espicíficado encontrado"),
-            @ApiResponse(responseCode = "400", description = "ID inválido"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
-    })
-
+    
 
 
     // Define o endpoint para utilizar a função "getPersonagemFromListById"
