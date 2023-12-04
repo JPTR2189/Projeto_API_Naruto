@@ -54,7 +54,7 @@ public class NarutoClient {
 
     // Da um GET na API externa e retorna as informações do personagem pelo 'ID'
 
-    public Mono<PersonagemResponse> getPersonagemById(String id) {
+    public Mono<PersonagemResponse> getPersonagemById(int id) {
 
         log.info("Buscando o personagem com o id [{}]", id);
 
@@ -113,7 +113,7 @@ public class NarutoClient {
 
     // Da um GET na Lista "personagensSalvos" e retorna as informações do personagem pelo 'ID'
 
-    public PersonagemResponse getPersonagemFromListById(String id) {
+    public PersonagemResponse getPersonagemFromListById(int id) {
 
         log.info("Buscando o personagem com o id [{}] na lista", id);
 
@@ -121,9 +121,10 @@ public class NarutoClient {
 
         for(PersonagemResponse personagem:personagensSalvos){
 
-            String idAtual = personagem.getId();
+            int idAtual =  personagem.getId();
 
-            if(idAtual.equals(id)){
+
+            if(idAtual == id){
 
                 return personagem;
             }
@@ -180,7 +181,7 @@ public class NarutoClient {
 
     // Faz um GET de um personagem pelo 'ID' na API e salva o resultado em uma lista (POST fake)
 
-    public List<PersonagemResponse> postPersonagemById(String id) {
+    public List<PersonagemResponse> postPersonagemById(int id) {
 
         log.info("Salvando personagem com o id [{}]", id);
 
@@ -203,7 +204,7 @@ public class NarutoClient {
 
     // Cria um novo personagem e salve ele em uma lista (POST fake)
 
-    public List<PersonagemResponse> postNewPersonagem(String nome, String id, String sexo, String idade,
+    public List<PersonagemResponse> postNewPersonagem(String nome, int id, String sexo, int idade,
                                                       ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
 
         log.info("Salvando personagem novo");
@@ -221,7 +222,7 @@ public class NarutoClient {
         personagem.setNatureType(TipoNatural);
         personagem.setTools(Ferramentas);
 
-        if (Integer.parseInt(personagem.getId()) > 1600) {
+        if (personagem.getId() > 1600) {
             personagensSalvos.add(personagem);
         }
         return getPersonagensSalvos();
@@ -231,7 +232,7 @@ public class NarutoClient {
 
     // Remove o personagem com o 'ID' especificado da lista "personagensSalvos"
 
-    public List<PersonagemResponse> deletePersonagemById(String id){
+    public List<PersonagemResponse> deletePersonagemById(int id){
 
         log.info("Deletando personagem com o id [{}]", id);
 
@@ -239,9 +240,10 @@ public class NarutoClient {
                 while (iterator.hasNext()){
 
                     PersonagemResponse personagem = iterator.next();
-                    String idUsuario = personagem.getId();
 
-                    if(idUsuario.equals(id))
+                    int idUsuario = personagem.getId();
+
+                    if(idUsuario == id)
 
                             iterator.remove();
                 }
