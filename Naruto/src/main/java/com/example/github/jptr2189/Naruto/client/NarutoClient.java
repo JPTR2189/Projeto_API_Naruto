@@ -1,6 +1,8 @@
 package com.example.github.jptr2189.Naruto.client;
 import com.example.github.jptr2189.Naruto.response.PersonagemResponse;
 import com.example.github.jptr2189.Naruto.response.Personal;
+import com.example.github.jptr2189.Naruto.response.PostPersonagem;
+import com.example.github.jptr2189.Naruto.response.PostPersonal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -204,8 +206,8 @@ public class NarutoClient {
 
     // Cria um novo personagem e salve ele em uma lista (POST fake)
 
-    public List<PersonagemResponse> postNewPersonagem(String nome, int id, String sexo, int idade,
-                                                      ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
+    public List<PersonagemResponse> postNewPersonagem(String nome, int id, String sexo, int idade, String clan,
+                                                  ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
 
         log.info("Salvando personagem novo");
 
@@ -218,6 +220,7 @@ public class NarutoClient {
         personagem.setName(nome);
         personal.setSex(sexo);
         personal.setAge(idade);
+        personal.setClan(clan);
         personagem.setJutsu(jutsu);
         personagem.setNatureType(TipoNatural);
         personagem.setTools(Ferramentas);
