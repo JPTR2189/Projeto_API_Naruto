@@ -126,11 +126,36 @@ public class NarutoController {
 
     // Define o endpoint para utilizar a função "getPersonagemFromListById"
 
-    @GetMapping(value = "/list/get", produces = "application/json")
+    @GetMapping(value = "/list/get/id={id}", produces = "application/json")
 
     public PersonagemResponse getPersonagemFromListById(@RequestParam int id){
 
         return narutoClient.getPersonagemFromListById(id);
+
+    }
+
+
+
+    // Documenta a funcionalidade "getPersonagemFromListByName" no Swagger
+
+    @Operation(summary = "Realiza a busca dos dados de um personagem específicado pelo 'nome' na lista 'personagensSalvos'", method = "GET")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Personagem com o 'nome' espicíficado encontrado"),
+            @ApiResponse(responseCode = "400", description = "nome inválido"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
+    })
+
+
+
+    // Define o endpoint para utilizar a função "getPersonagemFromListByName"
+
+    @GetMapping(value = "/list/get/nome={nome}", produces = "application/json")
+
+    public PersonagemResponse getPersonagemFromListByName(@RequestParam String nome){
+
+        return narutoClient.getPersonagemFromListByName(nome);
 
     }
 

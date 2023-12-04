@@ -1,8 +1,7 @@
 package com.example.github.jptr2189.Naruto.client;
+
 import com.example.github.jptr2189.Naruto.response.PersonagemResponse;
 import com.example.github.jptr2189.Naruto.response.Personal;
-import com.example.github.jptr2189.Naruto.response.PostPersonagem;
-import com.example.github.jptr2189.Naruto.response.PostPersonal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -127,6 +126,32 @@ public class NarutoClient {
 
 
             if(idAtual == id){
+
+                return personagem;
+            }
+
+        }
+
+        return personagemErro;
+
+    }
+
+
+
+    // Da um GET na Lista "personagensSalvos" e retorna as informações do personagem pelo 'nome'
+
+    public PersonagemResponse getPersonagemFromListByName(String nome) {
+
+        log.info("Buscando o personagem com o nome [{}] na lista", nome);
+
+        PersonagemResponse personagemErro = new PersonagemResponse();
+
+        for(PersonagemResponse personagem:personagensSalvos){
+
+            String nomeAtual =  personagem.getName();
+
+
+            if(nomeAtual.equals(nome)){
 
                 return personagem;
             }
