@@ -1,5 +1,6 @@
 package com.example.github.jptr2189.Naruto.client;
 
+import com.example.github.jptr2189.Naruto.exceptions.PersonagemNaoEncontradoException;
 import com.example.github.jptr2189.Naruto.response.PersonagemResponse;
 import com.example.github.jptr2189.Naruto.response.Personal;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -120,16 +121,15 @@ public class NarutoClient {
 
         PersonagemResponse personagemErro = new PersonagemResponse();
 
-        for(PersonagemResponse personagem:personagensSalvos){
+        for (PersonagemResponse personagem : personagensSalvos) {
 
-            int idAtual =  personagem.getId();
+            int idAtual = personagem.getId();
 
 
-            if(idAtual == id){
+            if (idAtual == id) {
 
                 return personagem;
             }
-
         }
 
         return personagemErro;
@@ -146,12 +146,12 @@ public class NarutoClient {
 
         PersonagemResponse personagemErro = new PersonagemResponse();
 
-        for(PersonagemResponse personagem:personagensSalvos){
+        for (PersonagemResponse personagem : personagensSalvos) {
 
-            String nomeAtual =  personagem.getName();
+            String nomeAtual = personagem.getName();
 
 
-            if(nomeAtual.equals(nome)){
+            if (nomeAtual.equals(nome)) {
 
                 return personagem;
             }
@@ -232,7 +232,7 @@ public class NarutoClient {
     // Cria um novo personagem e salve ele em uma lista (POST fake)
 
     public List<PersonagemResponse> postNewPersonagem(String nome, int id, String sexo, int idade, String clan,
-                                                  ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
+                                                      ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
 
         log.info("Salvando personagem novo");
 
@@ -251,7 +251,9 @@ public class NarutoClient {
         personagem.setTools(Ferramentas);
 
         if (personagem.getId() > 1600) {
+
             personagensSalvos.add(personagem);
+
         }
         return getPersonagensSalvos();
     }
@@ -260,23 +262,24 @@ public class NarutoClient {
 
     // Remove o personagem com o 'ID' especificado da lista "personagensSalvos"
 
-    public List<PersonagemResponse> deletePersonagemById(int id){
+    public List<PersonagemResponse> deletePersonagemById(int id) {
 
         log.info("Deletando personagem com o id [{}]", id);
 
-                Iterator<PersonagemResponse> iterator = personagensSalvos.iterator();
-                while (iterator.hasNext()){
+        Iterator<PersonagemResponse> iterator = personagensSalvos.iterator();
 
-                    PersonagemResponse personagem = iterator.next();
+        while (iterator.hasNext()) {
 
-                    int idUsuario = personagem.getId();
+            PersonagemResponse personagem = iterator.next();
 
-                    if(idUsuario == id)
+            int idUsuario = personagem.getId();
 
-                            iterator.remove();
-                }
+            if (idUsuario == id)
 
-                return getPersonagensSalvos();
+                iterator.remove();
+        }
+
+        return getPersonagensSalvos();
 
     }
 
@@ -284,17 +287,18 @@ public class NarutoClient {
 
     // Remove o personagem com o 'nome' especificado da lista 'personagensSalvos'
 
-    public List<PersonagemResponse> deletePersonagemByName(String name){
+    public List<PersonagemResponse> deletePersonagemByName(String nome) {
 
-        log.info("Deletando personagem com o nome [{}]", name);
+        log.info("Deletando personagem com o nome [{}]", nome);
 
         Iterator<PersonagemResponse> iterator = personagensSalvos.iterator();
-        while (iterator.hasNext()){
+
+        while (iterator.hasNext()) {
 
             PersonagemResponse personagem = iterator.next();
-            String idUsuario = personagem.getName();
+            String nomeUsuario = personagem.getName();
 
-            if(idUsuario.equals(name))
+            if (nomeUsuario.equals(nome))
 
                 iterator.remove();
         }
@@ -307,14 +311,52 @@ public class NarutoClient {
 
     // Limpa a lista "personagensSalvos"
 
-    public List<PersonagemResponse> cleanDelete(){
+    public List<PersonagemResponse> cleanDelete() {
 
         log.info("Limpando a lista");
-
 
         personagensSalvos.removeAll(personagensSalvos);
 
         return getPersonagensSalvos();
 
+    }
+
+
+
+    // Edita um personagem especifícado pelo "ID" na lista 'personagensSalvos'
+
+    public List<PersonagemResponse> putPersonagemById(int id, String nome, String sexo, int idade, String clan,
+                                                      ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
+
+        log.info("Deletando personagem com o id [{}]", id);
+
+        boolean personagemEncontrado = false;
+
+        for (PersonagemResponse personagemAtual : personagensSalvos) {
+
+                if (personagemAtual.getId() == id) {
+
+                    personagemAtual.setId(id);
+                    personagemAtual.setName(nome);
+
+                    Personal personal = personagemAtual.getPersonal();
+
+                    personal.setSex(sexo);
+                    personal.setAge(idade);
+                    personal.setClan(clan);
+                    personagemAtual.setJutsu(jutsu);
+                    personagemAtual.setNatureType(TipoNatural);
+                    personagemAtual.setTools(Ferramentas);
+
+                    personagemEncontrado = true;
+                    break;
+                }
+        }
+
+        if (!personagemEncontrado) {
+            throw new PersonagemNaoEncontradoException("Personagem com o ID especifícado não encontrado");
+        }
+
+        return getPersonagensSalvos();
     }
 }

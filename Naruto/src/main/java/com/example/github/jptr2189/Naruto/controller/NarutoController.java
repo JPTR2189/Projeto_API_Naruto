@@ -309,4 +309,31 @@ public class NarutoController {
         return narutoClient.cleanDelete();
 
     }
+
+
+
+    // Documenta a funcionalidade "putPersonagemFromListById" no Swagger
+
+    @Operation(summary = "Edita um personagem especifícado pelo 'ID' na lista ", method = "PUT")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Personagem Editado"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "500", description = "Erro ao editar o personagem"),
+    })
+
+
+
+    // Configura o acesso do endpoint na URL para utilizar a funcionalidade "putPersonagemFromListById"
+
+    @PutMapping("/edit/id={id}")
+    public List<PersonagemResponse> putPersonagemById(@RequestParam int id, @RequestParam String nome, @RequestParam String sexo, @RequestParam int idade,
+                                                      @RequestParam String clan , @RequestParam ArrayList<String> jutsu , @RequestParam ArrayList<String> tipoNatural, @RequestParam ArrayList<String> ferramentas){
+
+
+        return narutoClient.putPersonagemById(id, nome, sexo, idade, clan , jutsu, tipoNatural, ferramentas);
+
+    }
+
 }
