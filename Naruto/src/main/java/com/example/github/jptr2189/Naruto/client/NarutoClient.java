@@ -28,10 +28,16 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 public class NarutoClient {
 
-    // Cria a lista para salvar os personagens pelos metódos "postPersonagemById" e "postPersonagemByName"
+    // Cria a lista para salvar os personagens pelos metódos "postPersonagemById" , "postPersonagemByName" e "postNewPersonagem"
 
     @Getter
     private final List<PersonagemResponse> personagensSalvos = new ArrayList<>();
+
+
+    // Cria uma lista para fazer paginação dos personagens salvos na lista "personagensSalvos"
+
+    @Getter
+    private final List<PersonagemResponse> paginacaoDePersonagens = new ArrayList<>();
 
 
     // Cria uma instância do WebClient para realizar operações WEB
@@ -94,22 +100,49 @@ public class NarutoClient {
 
 
 
-    // Da um GET na API externa e retorna as informações dos 20 primeiros personagens
+    // Da um GET na API externa e retorna as informações dos personagens especifícados pelos parâmetros "page" e "size"
 
-    public Mono<String> getAllPersonagens() {
+    public Mono<String> getAllPersonagens(int page, int size) {
 
-        log.info("Buscando todos os personagens");
+        String parametros = "?page=" + page + "&limit=" + size;
+
+        log.info("Buscando [{}] personagens da página [{}] ", size, page);
 
         return webClient
                 .get()
-                .uri("/character")
+                .uri("/character" + parametros)
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError,
-                        error -> Mono.error(new RuntimeException("Verifique o caminho do endpoint")))
+                        error -> Mono.error(new RuntimeException("Verifique o caminho do endpoint e os parâmetros informados")))
                 .bodyToMono(String.class);
 
 
     }
+
+
+
+    // Da um GET na lista "personagensSalvos" e retorna as informações dos personagens especifícados de acordo parâmetro "quantidade"
+
+    public List<PersonagemResponse> getAllPersonagensFromList(int inicio, int fim) {
+
+
+
+        log.info("Buscando personagens na lista 'personagensSalvos' ");
+
+        for(int i = inicio; i <= fim ; i ++){
+
+            PersonagemResponse personagemAtual = personagensSalvos.get(i);
+
+            paginacaoDePersonagens.add(personagemAtual);
+
+        }
+
+        return getPaginacaoDePersonagens();
+
+
+    }
+
+
 
 
 

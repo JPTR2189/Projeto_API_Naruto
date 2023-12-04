@@ -103,9 +103,34 @@ public class NarutoController {
 
     @GetMapping(value = "/all", produces = "application/json")
 
-    public Mono<String> getAllPersonagens() {
+    public Mono<String> getAllPersonagens(@RequestParam int pagina, @RequestParam int tamanho) {
 
-        return narutoClient.getAllPersonagens();
+        return narutoClient.getAllPersonagens(pagina, tamanho);
+
+    }
+
+
+
+    // Documenta a funcionalidade getAllPersonagensFromList" no Swagger
+
+    @Operation(summary = "Busca os dados dos personagens da lista de acordo com os parâmetros informados", method = "GET")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Busca na lista efetuada com exito"),
+            @ApiResponse(responseCode = "422", description = "Parâmetros inválidos"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca na lista"),
+    })
+
+
+
+    // Define o endpoint na URL para utilizar a função "getAllPersonagensFromList"
+
+    @GetMapping(value = "/list/all", produces = "application/json")
+
+    public List<PersonagemResponse> getAllPersonagensFromList(@RequestParam (defaultValue = "") int inicio, @RequestParam (defaultValue = "") int fim){
+
+        return narutoClient.getAllPersonagensFromList(inicio, fim);
 
     }
 
