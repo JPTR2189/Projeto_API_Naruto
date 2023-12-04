@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -28,10 +29,16 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 public class NarutoClient {
 
-    // Cria a lista para salvar os personagens pelos metódos "postPersonagemById" e "postPersonagemByName"
+    // Cria a lista para salvar os personagens pelos metódos "postPersonagemById" , "postPersonagemByName" e "postNewPersonagem"
 
     @Getter
     private final List<PersonagemResponse> personagensSalvos = new ArrayList<>();
+
+
+    // Cria uma lista para fazer paginação dos personagens salvos na lista "personagensSalvos"
+
+    @Getter
+    private final List<PersonagemResponse> paginacaoDePersonagens = new ArrayList<>();
 
 
     // Cria uma instância do WebClient para realizar operações WEB
@@ -60,18 +67,28 @@ public class NarutoClient {
 
         log.info("Buscando o personagem com o id [{}]", id);
 
-        return webClient
-                .get()
-                .uri("/character/" + id)
-                .accept(APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError,
-                        error -> Mono.error(new RuntimeException("Verifique os parâmetros informados")))
-                .bodyToMono(String.class)
-                .map(this::converteJson);
 
+            return webClient
+                    .get()
+                    .uri("/character/" + id)
+                    .accept(APPLICATION_JSON)
+                    .retrieve()
+                    .onStatus(HttpStatusCode::is4xxClientError, response -> {
 
-    }
+                        if (response.statusCode() == HttpStatus.NOT_FOUND) {
+
+                            return Mono.error(new PersonagemNaoEncontradoException("Personagem com o id [" + id + "] não encontrado"));
+
+                        } else {
+
+                            return Mono.error(new RuntimeException("Verifique os parâmetros informados"));
+
+                        }
+                    })
+                    .bodyToMono(String.class)
+                   .map(this::converteJson);
+        }
+
 
 
 
@@ -86,28 +103,50 @@ public class NarutoClient {
                 .uri("/character/search?name=" + name)
                 .accept(APPLICATION_JSON)
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError,
-                        error -> Mono.error(new RuntimeException("Verifique os parâmetros informados")))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> {
+
+                    if (response.statusCode() == HttpStatus.NOT_FOUND) {
+
+                        return Mono.error(new PersonagemNaoEncontradoException("Personagem com o nome [" + name + "] não encontrado"));
+
+                    } else {
+
+                        return Mono.error(new RuntimeException("Verifique os parâmetros informados"));
+
+                    }
+
+                })
                 .bodyToMono(String.class)
                 .map(this::converteJson);
     }
 
 
 
-    // Da um GET na API externa e retorna as informações dos 20 primeiros personagens
+    // Da um GET na API externa e retorna as informações dos personagens especifícados pelos parâmetros "page" e "size"
 
-    public Mono<String> getAllPersonagens() {
+    public Mono<String> getAllPersonagens(int page, int size) {
 
-        log.info("Buscando todos os personagens");
+        String parametros = "?page=" + page + "&limit=" + size;
+
+        log.info("Buscando [{}] personagens da página [{}] ", size, page);
 
         return webClient
                 .get()
-                .uri("/character")
+                .uri("/character" + parametros)
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError,
-                        error -> Mono.error(new RuntimeException("Verifique o caminho do endpoint")))
-                .bodyToMono(String.class);
+                .onStatus(HttpStatusCode::is4xxClientError, response -> {
 
+                    if (response.statusCode() == HttpStatus.NOT_FOUND) {
+
+                        return Mono.error(new PersonagemNaoEncontradoException("Parâmetros incorretos"));
+
+                    } else {
+
+                        return Mono.error(new RuntimeException("Verifique os parâmetros informados"));
+                    }
+
+                })
+                .bodyToMono(String.class);
 
     }
 
@@ -172,7 +211,9 @@ public class NarutoClient {
         try {
 
             ObjectMapper objectMapper = new ObjectMapper();
+
             PersonagemResponse personagemResponse = objectMapper.readValue(jsonString, PersonagemResponse.class);
+
             return personagemResponse;
 
         } catch (JsonProcessingException jpe) {
@@ -195,9 +236,21 @@ public class NarutoClient {
                 .uri("/character/search?name=" + name)
                 .accept(APPLICATION_JSON)
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError,
-                        error -> Mono.error(new RuntimeException("Verifique os parâmetros informados")))
-                .bodyToFlux(PersonagemResponse.class);
+                .onStatus(HttpStatusCode::is4xxClientError, response -> {
+
+                    if (response.statusCode() == HttpStatus.NOT_FOUND) {
+
+                        return Mono.error(new PersonagemNaoEncontradoException("Personagem com o nome [" + name + "] não encontrado"));
+
+                    } else {
+
+                        return Mono.error(new RuntimeException("Verifique os parâmetros informados"));
+
+                    }
+
+                })
+                .bodyToFlux(String.class)
+                .map(this::converteJson);
 
         personagensSalvos.addAll(personagem.collectList().block());
         return getPersonagensSalvos();
@@ -213,12 +266,24 @@ public class NarutoClient {
         log.info("Salvando personagem com o id [{}]", id);
 
         Flux<PersonagemResponse> personagem = webClient
+
                 .get()
                 .uri("/character/" + id)
                 .accept(APPLICATION_JSON)
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError,
-                        error -> Mono.error(new RuntimeException("Verifique os parâmetros informados")))
+
+                .onStatus(HttpStatusCode::is4xxClientError, response -> {
+                    if (response.statusCode() == HttpStatus.NOT_FOUND) {
+
+                        return Mono.error(new PersonagemNaoEncontradoException("Personagem com o nome [" + id + "] não encontrado"));
+
+                    } else {
+
+                        return Mono.error(new RuntimeException("Verifique os parâmetros informados"));
+
+                    }
+                })
+
                 .bodyToFlux(PersonagemResponse.class);
 
         personagensSalvos.addAll(personagem.collectList().block());
