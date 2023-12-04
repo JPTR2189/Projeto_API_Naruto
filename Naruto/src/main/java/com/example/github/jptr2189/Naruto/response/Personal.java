@@ -15,9 +15,11 @@ import java.io.Serializable;
 
 public class Personal implements Serializable {
 
-
     @JsonProperty("sex")
     public String sex;
     @JsonProperty("age")
-    public String age;
+    public int age;
+    @JsonProperty("clan")
+    public String clan;
+
 }

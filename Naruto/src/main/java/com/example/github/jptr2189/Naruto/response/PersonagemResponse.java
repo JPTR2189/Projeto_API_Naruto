@@ -21,7 +21,7 @@ public class PersonagemResponse implements Serializable {
     @JsonProperty("name")
     public String name;
     @JsonProperty("id")
-    public String id;
+    public int id;
     @JsonProperty("personal")
     public Personal personal;
     @JsonProperty("jutsu")

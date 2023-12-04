@@ -27,6 +27,7 @@ import java.util.List;
 
 @Tag(name ="narutodb-api")
 
+
 public class NarutoController {
 
     // Chama a "Client" para dentro da "Controller"
@@ -36,7 +37,7 @@ public class NarutoController {
 
     // Documenta a funcionalidade "getPersonagemById" no Swagger
 
-    @Operation(summary = "Realiza a busca de dados de um personagem espicíficado pelo 'ID' na API", method = "GET")
+    @Operation(summary = "Realiza a busca dos dados de um personagem específicado pelo 'ID' na API", method = "GET")
 
     @ApiResponses(value = {
 
@@ -47,19 +48,21 @@ public class NarutoController {
     })
 
 
+
     // Define o endpoint na URL para utilizar a funcionalidade "getPersonagemById"
 
     @GetMapping(value = "/id={id}", produces = "application/json")
 
-    public Mono<PersonagemResponse> getPersonagemById(@RequestParam(value = "id") String id) {
+    public Mono<PersonagemResponse> getPersonagemById(@RequestParam(value = "id") int id) {
 
         return narutoClient.getPersonagemById(id);
 
     }
 
 
+
     // Documenta a funcionalidade "getPersonagemByName" no Swagger
-    @Operation(summary = "Realiza a busca de dados de um personagem específicado pelo 'nome' na API", method = "GET")
+    @Operation(summary = "Realiza a busca dos dados de um personagem específicado pelo 'nome' na API", method = "GET")
 
     @ApiResponses(value = {
 
@@ -70,19 +73,22 @@ public class NarutoController {
     })
 
 
+
     // Define o endpoint na URL para utilizar a função "getPersonagemByName"
 
-    @GetMapping(value = "/name={name}", produces = "application/json")
+    @GetMapping(value = "/nome={nome}", produces = "application/json")
 
-    public Mono<PersonagemResponse> getPersonagemByName(@RequestParam(value = "name") String name) {
+    public Mono<PersonagemResponse> getPersonagemByName(@RequestParam(value = "nome") String nome) {
 
-        return narutoClient.getPersonagemByName(name);
+        return narutoClient.getPersonagemByName(nome);
 
     }
 
+
+
     // Documenta a funcionalidade getAllPersonagens" no Swagger
 
-    @Operation(summary = "Busca os dados de todos os personagens", method = "GET")
+    @Operation(summary = "Busca os dados dos 20 primeiros personagens na API", method = "GET")
 
     @ApiResponses(value = {
 
@@ -90,6 +96,7 @@ public class NarutoController {
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "500", description = "Erro ao fazer a requisição"),
     })
+
 
 
     // Define o endpoint na URL para utilizar a função "getAllPersonagens"
@@ -103,9 +110,60 @@ public class NarutoController {
     }
 
 
+
+    // Documenta a funcionalidade "getPersonagemFromListById" no Swagger
+
+    @Operation(summary = "Realiza a busca dos dados de um personagem específicado pelo 'ID' na lista 'personagensSalvos'", method = "GET")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Personagem com o 'ID' espicíficado encontrado"),
+            @ApiResponse(responseCode = "400", description = "ID inválido"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
+    })
+
+
+
+    // Define o endpoint para utilizar a função "getPersonagemFromListById"
+
+    @GetMapping(value = "/list/get/id={id}", produces = "application/json")
+
+    public PersonagemResponse getPersonagemFromListById(@RequestParam int id){
+
+        return narutoClient.getPersonagemFromListById(id);
+
+    }
+
+
+
+    // Documenta a funcionalidade "getPersonagemFromListByName" no Swagger
+
+    @Operation(summary = "Realiza a busca dos dados de um personagem específicado pelo 'nome' na lista 'personagensSalvos'", method = "GET")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Personagem com o 'nome' espicíficado encontrado"),
+            @ApiResponse(responseCode = "400", description = "nome inválido"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar a busca do personagem"),
+    })
+
+
+
+    // Define o endpoint para utilizar a função "getPersonagemFromListByName"
+
+    @GetMapping(value = "/list/get/nome={nome}", produces = "application/json")
+
+    public PersonagemResponse getPersonagemFromListByName(@RequestParam String nome){
+
+        return narutoClient.getPersonagemFromListByName(nome);
+
+    }
+
+
+
     // Documenta a funcionalidade "postPersonagemByName" no Swagger
 
-    @Operation(summary = "Salva os dados do personagem com o 'nome' específicado na lista 'PersonagensSalvos'", method = "POST")
+    @Operation(summary = "Faz um GET na API e salva os dados do personagem com o 'nome' específicado na lista 'personagensSalvos'", method = "POST")
 
     @ApiResponses(value = {
 
@@ -116,17 +174,20 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postPersonagemByName"
 
 
-    @PostMapping("/post/name={name}")
+    @PostMapping("/post/nome={nome}")
 
-    public List<PersonagemResponse> postPersonagemByName(@RequestBody PersonagemResponse personagem, @RequestParam String name) {
+    public List<PersonagemResponse> postPersonagemByName(@RequestBody PersonagemResponse personagem, @RequestParam String nome) {
 
-        return narutoClient.postPersonagemByName(name);
+        return narutoClient.postPersonagemByName(nome);
 
     }
 
+
+    @Operation(summary = "Faz um GET na API e salva os dados do personagem com o 'ID' específicado na lista 'personagensSalvos'", method = "POST")
 
 
     @ApiResponses(value = {
@@ -138,15 +199,17 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postPersonagemById"
 
     @PostMapping("/post/id={id}")
 
-    public List<PersonagemResponse> postPersonagemById(@RequestBody PersonagemResponse personagem, @RequestParam String id) {
+    public List<PersonagemResponse> postPersonagemById(@RequestBody PersonagemResponse personagem, @RequestParam int id) {
 
         return narutoClient.postPersonagemById(id);
 
     }
+
 
 
     // Documenta a funcionalidade "postNewPersonagem" no Swagger
@@ -162,16 +225,18 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postNewPersonagem"
 
     @PostMapping("/post/new/{nome}/{id}/{sexo}/{idade}/{jutsu}/{TipoNatural}/{Ferramentas}")
 
-    public List<PersonagemResponse> postNewPersonagem(@RequestBody PersonagemResponse personagem, @RequestParam String nome, @RequestParam String A_Partir_de_1601, @RequestParam String sexo, @RequestParam String idade,
-                                                      @RequestParam ArrayList<String> jutsu , @RequestParam ArrayList<String> tipoNatural, @RequestParam ArrayList<String> ferramentas) {
+    public List<PersonagemResponse> postNewPersonagem(@RequestBody PersonagemResponse personagem, @RequestParam String nome, @RequestParam int id, @RequestParam String sexo, @RequestParam int idade,
+                                                  @RequestParam String clan , @RequestParam ArrayList<String> jutsu , @RequestParam ArrayList<String> tipoNatural, @RequestParam ArrayList<String> ferramentas) {
 
-        return narutoClient.postNewPersonagem(nome, A_Partir_de_1601, sexo, idade, jutsu, tipoNatural, ferramentas);
+        return narutoClient.postNewPersonagem(nome, id, sexo, idade, clan , jutsu, tipoNatural, ferramentas);
 
     }
+
 
 
     // Documenta a funcionalidade "deletePersonagemById" no Swagger
@@ -186,14 +251,16 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "deletePersonagemById"
 
     @DeleteMapping("/delete/id={id}")
-    public List<PersonagemResponse> deletePersonagemById(@RequestBody PersonagemResponse personagem ,@RequestParam String id){
+    public List<PersonagemResponse> deletePersonagemById(@RequestBody PersonagemResponse personagem ,@RequestParam int id){
 
         return narutoClient.deletePersonagemById(id);
 
     }
+
 
 
     // Documenta a funcionalidade "deletePersonagemByName" no Swagger
@@ -209,14 +276,16 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "deletePersonagemByName"
 
-    @DeleteMapping("/delete/name{name}")
-    public List<PersonagemResponse> deletePersonagemByName(@RequestBody PersonagemResponse personagem, @RequestParam String name){
+    @DeleteMapping("/delete/nome{nome}")
+    public List<PersonagemResponse> deletePersonagemByName(@RequestBody PersonagemResponse personagem, @RequestParam String nome){
 
-        return narutoClient.deletePersonagemByName(name);
+        return narutoClient.deletePersonagemByName(nome);
 
     }
+
 
 
     // Documenta a funcionalidade "cleanDelete" no Swagger
@@ -231,6 +300,7 @@ public class NarutoController {
     })
 
 
+
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "cleanDelete"
 
     @DeleteMapping("/delete/all")
@@ -239,5 +309,4 @@ public class NarutoController {
         return narutoClient.cleanDelete();
 
     }
-
 }
