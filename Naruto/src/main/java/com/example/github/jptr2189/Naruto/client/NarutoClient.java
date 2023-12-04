@@ -250,7 +250,7 @@ public class NarutoClient {
         personagem.setNatureType(TipoNatural);
         personagem.setTools(Ferramentas);
 
-        if (personagem.getId() > 1600) {
+        if (personagem.getId() > 1429) {
 
             personagensSalvos.add(personagem);
 
@@ -354,7 +354,49 @@ public class NarutoClient {
         }
 
         if (!personagemEncontrado) {
-            throw new PersonagemNaoEncontradoException("Personagem com o ID especifícado não encontrado");
+            throw new PersonagemNaoEncontradoException("Personagem com o ID [" + id + "] não encontrado");
+        }
+
+        return getPersonagensSalvos();
+    }
+
+
+
+    // Edita um personagem especifícado pelo "nome" na lista 'personagensSalvos'
+
+    public List<PersonagemResponse> putPersonagemByName(String nome, int id, String sexo, int idade, String clan,
+                                                      ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
+
+        log.info("Deletando personagem com o nome [{}]", nome);
+
+        boolean personagemEncontrado = false;
+
+        for (PersonagemResponse personagemAtual : personagensSalvos) {
+
+            if (personagemAtual.getName().equals(nome)) {
+
+                personagemAtual.setName(nome);
+
+                if (id > 1429)
+                    personagemAtual.setId(id);
+
+
+                Personal personal = personagemAtual.getPersonal();
+
+                personal.setSex(sexo);
+                personal.setAge(idade);
+                personal.setClan(clan);
+                personagemAtual.setJutsu(jutsu);
+                personagemAtual.setNatureType(TipoNatural);
+                personagemAtual.setTools(Ferramentas);
+
+                personagemEncontrado = true;
+                break;
+            }
+        }
+
+        if (!personagemEncontrado) {
+            throw new PersonagemNaoEncontradoException("Personagem com o nome [" + nome + "] não encontrado");
         }
 
         return getPersonagensSalvos();
