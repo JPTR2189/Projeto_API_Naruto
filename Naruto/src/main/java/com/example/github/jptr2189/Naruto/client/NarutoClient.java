@@ -1,5 +1,6 @@
 package com.example.github.jptr2189.Naruto.client;
 
+import com.example.github.jptr2189.Naruto.exceptions.PersonagemExisteException;
 import com.example.github.jptr2189.Naruto.exceptions.PersonagemNaoEncontradoException;
 import com.example.github.jptr2189.Naruto.response.PersonagemResponse;
 import com.example.github.jptr2189.Naruto.response.Personal;
@@ -19,6 +20,7 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -246,9 +248,26 @@ public class NarutoClient {
                 .bodyToFlux(String.class)
                 .map(this::converteJson);
 
-        personagensSalvos.addAll(personagem.collectList().block());
-        return getPersonagensSalvos();
 
+        boolean personagemExiste = false;
+
+        for(PersonagemResponse personagemAtual: personagensSalvos){
+
+            if(personagemAtual.getName().equals(name))
+                personagemExiste = true;
+
+        }
+
+        if(personagemExiste)
+        {
+            throw new PersonagemExisteException("O Personagem ["+ name +"] já existe na lista");
+
+        } else {
+
+            personagensSalvos.addAll(personagem.collectList().block());
+
+            return getPersonagensSalvos();
+        }
     }
 
 
@@ -279,8 +298,27 @@ public class NarutoClient {
 
                 .bodyToFlux(PersonagemResponse.class);
 
-        personagensSalvos.addAll(personagem.collectList().block());
-        return getPersonagensSalvos();
+
+        boolean personagemExiste = false;
+
+        for(PersonagemResponse personagemAtual: personagensSalvos){
+
+            if(personagemAtual.getId() == id)
+
+                personagemExiste = true;
+
+        }
+
+        if(personagemExiste)
+        {
+            throw new PersonagemExisteException("O Personagem ["+ id +"] já existe na lista");
+
+        } else {
+
+            personagensSalvos.addAll(personagem.collectList().block());
+
+            return getPersonagensSalvos();
+        }
 
 
     }
@@ -298,26 +336,49 @@ public class NarutoClient {
         personagem.setPersonal(personal);
 
 
-        personagem.setId(id);
-        personagem.setName(nome);
-        personal.setSex(sexo);
-        personal.setAge(idade);
-        personal.setClan(clan);
-        personagem.setJutsu(jutsu);
-        personagem.setNatureType(TipoNatural);
-        personagem.setTools(Ferramentas);
-
-        if (personagem.getId() > 1429) {
+      /*  if (id > 1429) {
 
             personagensSalvos.add(personagem);
 
         } else {
 
-            throw new PersonagemNaoEncontradoException("Não foi possível editar o personagem, pois já existe um personagem com o ID [" + id + "] ");
+            throw new PersonagemNaoEncontradoException("Não foi possível criar o personagem, pois já existe um personagem com o ID [" + id + "] ");
 
+        }*/
+
+        boolean personagemExisteId = false;
+        boolean personagemExisteNome = false;
+
+
+        for(PersonagemResponse personagemAtual: personagensSalvos){
+
+            if(personagemAtual.getId() == id || id < 1429)
+
+                personagemExisteId = true;
+
+
+
+           else if(personagemAtual.getName().equals(nome));
+
+                personagemExisteNome = true;
 
         }
-        return getPersonagensSalvos();
+
+        if(personagemExisteId) {
+            throw new PersonagemExisteException("Já existe um personagem com o ID [" + id + "]");
+
+        }
+        else if(personagemExisteNome) {
+
+            throw new PersonagemExisteException("Já existe um personagem com o Nome [" + nome + "] na lista");
+
+
+        } else
+
+            personagensSalvos.add(personagem);
+
+            return getPersonagensSalvos();
+
     }
 
 
