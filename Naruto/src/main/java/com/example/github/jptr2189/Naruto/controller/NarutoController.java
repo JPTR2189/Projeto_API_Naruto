@@ -108,7 +108,20 @@ public class NarutoController {
         return narutoClient.getAllPersonagens(pagina, tamanho);
 
     }
-    
+
+
+
+    // Documenta a funcionalidade "getPersonagemFromListById" no Swagger
+
+    @Operation(summary = "Realiza a busca dos dados de um personagem específicado pelo 'ID' na lista 'personagensSalvos'", method = "GET")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Personagem encontrado"),
+            @ApiResponse(responseCode = "400", description = "'ID' inválido"),
+            @ApiResponse(responseCode = "500", description = "Erro ao procurar o personagem na lista"),
+    })
+
 
 
     // Define o endpoint para utilizar a função "getPersonagemFromListById"
