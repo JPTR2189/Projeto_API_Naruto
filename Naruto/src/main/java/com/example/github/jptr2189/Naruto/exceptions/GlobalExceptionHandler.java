@@ -32,7 +32,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         @ExceptionHandler(Exception.class)
         public ResponseEntity<String> handleInternalServerError(Exception ex) {
-            String mensagemErro = "Ocorreu um erro interno no servidor: " + ex.getMessage();
+            String mensagemErro = "Ocorreu um erro interno: " + ex.getMessage();
             return new ResponseEntity<>(mensagemErro, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 }
