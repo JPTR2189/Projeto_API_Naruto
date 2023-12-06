@@ -327,7 +327,7 @@ public class NarutoClient {
     // Cria um novo personagem e salve ele em uma lista (POST fake)
 
     public List<PersonagemResponse> postNewPersonagem(String nome, int id, String sexo, int idade, String clan,
-                                                      ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
+                                                      ArrayList<String> jutsu, ArrayList<String> tipoNatural, ArrayList<String> ferramentas) {
 
         log.info("Salvando personagem novo");
 
@@ -335,16 +335,8 @@ public class NarutoClient {
         Personal personal = new Personal();
         personagem.setPersonal(personal);
 
-
-      /*  if (id > 1429) {
-
-            personagensSalvos.add(personagem);
-
-        } else {
-
-            throw new PersonagemNaoEncontradoException("Não foi possível criar o personagem, pois já existe um personagem com o ID [" + id + "] ");
-
-        }*/
+        personagem.setName(nome);
+        personagem.setId(id);
 
         boolean personagemExisteId = false;
         boolean personagemExisteNome = false;
@@ -352,20 +344,24 @@ public class NarutoClient {
 
         for(PersonagemResponse personagemAtual: personagensSalvos){
 
-            if(personagemAtual.getId() == id || id < 1429)
+            if(personagemAtual.getId() == id || id < 1430) {
 
                 personagemExisteId = true;
+                break;
+            }
 
 
-
-           else if(personagemAtual.getName().equals(nome));
+           else if(personagemAtual.getName().equals(nome)) {
 
                 personagemExisteNome = true;
-
+                break;
+           }
         }
 
         if(personagemExisteId) {
+
             throw new PersonagemExisteException("Já existe um personagem com o ID [" + id + "]");
+
 
         }
         else if(personagemExisteNome) {
@@ -374,6 +370,16 @@ public class NarutoClient {
 
 
         } else
+
+
+
+            personal.setSex(sexo);
+            personal.setClan(clan);
+            personal.setAge(idade);
+            personagem.setJutsu(jutsu);
+            personagem.setNatureType(tipoNatural);
+            personagem.setTools(ferramentas);
+
 
             personagensSalvos.add(personagem);
 
