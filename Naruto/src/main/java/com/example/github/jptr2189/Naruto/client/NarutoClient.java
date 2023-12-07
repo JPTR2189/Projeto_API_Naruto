@@ -6,8 +6,8 @@ import com.example.github.jptr2189.Naruto.response.PersonagemResponse;
 import com.example.github.jptr2189.Naruto.response.Personal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,15 +20,13 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 // Configura a classe Client
 @Service
 @Slf4j
-@RequiredArgsConstructor
-
+@AllArgsConstructor
 public class NarutoClient {
 
     // Cria a lista para salvar os personagens pelos metódos "postPersonagemById" , "postPersonagemByName" e "postNewPersonagem"
@@ -45,7 +43,7 @@ public class NarutoClient {
 
     // Cria uma instância do WebClient para realizar operações WEB
 
-    private final WebClient webClient;
+    private WebClient webClient;
 
 
     // Cria uma instância do "ObjectMapper" para dessiarilizar o JSON
@@ -65,6 +63,9 @@ public class NarutoClient {
     // Da um GET na API externa e retorna as informações do personagem pelo 'ID'
 
     public Mono<PersonagemResponse> getPersonagemById(int id) {
+
+        WebClient.Builder builder = WebClient.builder();
+        webClient = builder.baseUrl("https://narutodb.xyz/api").build();
 
         log.info("Buscando o personagem com o id [{}]", id);
 
