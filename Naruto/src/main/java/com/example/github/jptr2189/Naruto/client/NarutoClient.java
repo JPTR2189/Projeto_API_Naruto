@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -24,6 +25,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 // Configura a classe Client
+@Component
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -126,6 +128,9 @@ public class NarutoClient {
     // Da um GET na API externa e retorna as informações dos personagens especifícados pelos parâmetros "page" e "size"
 
     public Mono<String> getAllPersonagens(int page, int size) {
+
+        WebClient.Builder builder = WebClient.builder();
+        webClient = builder.baseUrl("https://narutodb.xyz/api").build();
 
         String parametros = "?page=" + page + "&limit=" + size;
 

@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -88,7 +89,7 @@ public class NarutoController {
 
     // Documenta a funcionalidade getAllPersonagens" no Swagger
 
-    @Operation(summary = "Busca os dados dos 20 primeiros personagens na API", method = "GET")
+    @Operation(summary = "Busca os dados dos personagens especifícados de acordo com os parâmetros 'página' e 'tamanho' na API", method = "GET")
 
     @ApiResponses(value = {
 
