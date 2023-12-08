@@ -37,7 +37,7 @@ public class NarutoClientTest {
     @Test
     void deveBuscarPersonagemPeloIdNaAPI(){
 
-        PersonagemResponse personagem = PersonagemResponse.builder().id(55).name("Amachi").build();
+        PersonagemResponse personagem = PersonagemResponse.builder().id(55).build();
 
         when(client.getPersonagemById(personagem.id)).thenReturn(personagem);
 
@@ -46,12 +46,30 @@ public class NarutoClientTest {
         PersonagemResponse retornoSemMono = retorno.block();
 
         assertEquals(retornoSemMono.getId(), personagem.getId());
+        Assertions.assertThat(retorno).isNotNull();
+
+
+
+    }
+
+    @Test
+    void deveBuscarPersonagemPeloNomeNaAPi(){
+
+        PersonagemResponse personagem = PersonagemResponse.builder().name("Amachi").build();
+
+        when(client.getPersonagemByName(personagem.name)).thenReturn(personagem);
+
+        Mono<PersonagemResponse> retorno = client.getPersonagemByName(personagem.name);
+
+        PersonagemResponse retornoSemMono = retorno.block();
+
         assertEquals(retornoSemMono.getName(), personagem.getName());
         Assertions.assertThat(retorno).isNotNull();
 
 
 
     }
+
 
 
 }
