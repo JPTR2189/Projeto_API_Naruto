@@ -11,6 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static reactor.core.publisher.Mono.when;
 
@@ -31,11 +34,8 @@ public class NarutoClientTest {
     private WebClient webClient;
 
 
-
-
-
     @Test
-    void deveBuscarPersonagemPeloIdNaAPI(){
+    void deveBuscarPersonagemPeloIdNaAPI() {
 
         PersonagemResponse personagem = PersonagemResponse.builder().id(55).build();
 
@@ -49,11 +49,10 @@ public class NarutoClientTest {
         Assertions.assertThat(retorno).isNotNull();
 
 
-
     }
 
     @Test
-    void deveBuscarPersonagemPeloNomeNaAPi(){
+    void deveBuscarPersonagemPeloNomeNaAPi() {
 
         PersonagemResponse personagem = PersonagemResponse.builder().name("Amachi").build();
 
@@ -67,9 +66,51 @@ public class NarutoClientTest {
         Assertions.assertThat(retorno).isNotNull();
 
 
-
     }
 
 
+    @Test
+    void deveBuscarPersonagensPorPaginacaoNaAPi(){
 
+        int page = 3;
+        int size = 1;
+        String id = null;
+
+        PersonagemResponse personagem = PersonagemResponse.builder().name("Three-Headed Guardian Beast").id(2).build();
+
+
+        Mono<String> retorno = client.getAllPersonagens(page, size);
+
+        String retornoSemMono = retorno.block();
+
+        when(client.getAllPersonagens(page, size)).thenReturn(personagem);
+
+
+        Pattern patternId = Pattern.compile("\"id\":(\\d+)");
+        Matcher matcherId = patternId.matcher(retornoSemMono);
+
+        if (matcherId.find()) {
+            String idValue = matcherId.group(1);
+
+            assertEquals(idValue, String.valueOf(personagem.getId()));
+
+
+        } else {
+            System.out.println("Nenhum valor de id encontrado no JSON.");
+        }
+
+        Pattern patternName = Pattern.compile("\"name\":\"([^\"]+)\"");
+        Matcher matcherName = patternName.matcher(retornoSemMono);
+
+        if (matcherName.find()) {
+            String nameValue = matcherName.group(1);
+
+            assertEquals(nameValue, (personagem.getName()));
+
+
+        } else {
+            System.out.println("Nenhum valor de name encontrado no JSON.");
+        }
+
+    }
 }
