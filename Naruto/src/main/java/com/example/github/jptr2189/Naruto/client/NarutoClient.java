@@ -36,13 +36,7 @@ public class NarutoClient {
     @Getter
     private final List<PersonagemResponse> personagensSalvos = new ArrayList<>();
 
-
-    // Cria uma lista para fazer paginação dos personagens salvos na lista "personagensSalvos"
-
-    @Getter
-    private final List<PersonagemResponse> paginacaoDePersonagens = new ArrayList<>();
-
-
+    
     // Cria uma instância do WebClient para realizar operações WEB
 
     private WebClient webClient;
