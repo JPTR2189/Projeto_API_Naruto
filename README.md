@@ -4,8 +4,8 @@
 
 
 > Status: Em Desenvolvimento  ⚠️
-
-### Esse é um aplicativo Back-end com uma conexão API externa ao site https://narutodb.xyz/api com intuito de conhecermos um pouco mais dos personagens do univero Naruto. 🐱‍👤
+## Esse é um projeto desenvolvido com o curso de JAVA do instituto Eldorado em parceria com o instituto Caldeira de Porto Alegre . 🏢 🚀
+### Se trata de uma aplicação Back-end com uma conexão API externa ao site https://narutodb.xyz/api com intuito de conhecermos um pouco mais dos personagens do univero Naruto. 🐱‍👤
 
 ## Chaves dos personagens 🔑:
 + name (String) ; 
@@ -59,4 +59,4 @@
 ## Como rodar o programa ✅:
 1) Baixe e abra o código em uma IDE de sua preferência
 2) Incie o arquivo "Naruto Application"
-3) Teste as funções no endereço **http://localhost:8080/swagger-ui/index.html#/narutodb-api/**
+3) Teste as funções no endereço **[Swagger](http://localhost:8080/swagger-ui/index.html#/narutodb-api/)**
