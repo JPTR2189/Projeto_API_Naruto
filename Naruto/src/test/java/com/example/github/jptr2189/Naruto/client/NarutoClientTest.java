@@ -11,6 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +34,9 @@ public class NarutoClientTest {
 
     @Mock
     private WebClient webClient;
+
+    @Mock
+    private final List<PersonagemResponse> personagensSalvos = new ArrayList<>();
 
 
     // Teste unitário da função "getPersonagemById"
@@ -118,4 +123,25 @@ public class NarutoClientTest {
         }
 
     }
+
+    // Teste unitário da função "getPersonagemFromListById"
+
+    @Test
+    void deveBuscarPersonagemNaListaPeloId(){
+
+        PersonagemResponse personagem = PersonagemResponse.builder().id(55).build();
+
+        Mono<PersonagemResponse> retorno = client.getPersonagemById(personagem.id);
+        PersonagemResponse retornoSemMono = retorno.block();
+
+        personagensSalvos.add(retornoSemMono);
+
+        when(retorno).thenReturn(personagem);
+
+        assertEquals(retornoSemMono.getId(), personagem.getId());
+
+
+    }
+
+
 }
