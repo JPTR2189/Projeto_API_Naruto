@@ -36,7 +36,7 @@ public class NarutoClient {
     @Getter
     private final List<PersonagemResponse> personagensSalvos = new ArrayList<>();
 
-    
+
     // Cria uma instância do WebClient para realizar operações WEB
 
     private WebClient webClient;

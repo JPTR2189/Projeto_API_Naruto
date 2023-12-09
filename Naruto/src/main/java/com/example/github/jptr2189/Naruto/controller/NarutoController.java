@@ -229,7 +229,7 @@ public class NarutoController {
 
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postNewPersonagem"
 
-    @PostMapping("/post/new/{nome}/{id}/{sexo}/{idade}/{jutsu}/{TipoNatural}/{Ferramentas}")
+    @PostMapping("/post/new")
 
     public List<PersonagemResponse> postNewPersonagem(@RequestBody PersonagemResponse personagem, @RequestParam String nome, @RequestParam int id, @RequestParam String sexo, @RequestParam int idade,
                                                   @RequestParam String clan , @RequestParam ArrayList<String> jutsu , @RequestParam ArrayList<String> tipoNatural, @RequestParam ArrayList<String> ferramentas) {
