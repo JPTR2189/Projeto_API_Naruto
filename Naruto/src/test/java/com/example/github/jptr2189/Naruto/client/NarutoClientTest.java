@@ -34,6 +34,8 @@ public class NarutoClientTest {
     private WebClient webClient;
 
 
+    // Teste unitário da função "getPersonagemById"
+
     @Test
     void deveBuscarPersonagemPeloIdNaAPI() {
 
@@ -50,6 +52,8 @@ public class NarutoClientTest {
 
 
     }
+
+    // Teste unitário da função "getPersonagemByName"
 
     @Test
     void deveBuscarPersonagemPeloNomeNaAPi() {
@@ -68,6 +72,7 @@ public class NarutoClientTest {
 
     }
 
+// Teste unitário da função "getAllPersonagens"
 
     @Test
     void deveBuscarPersonagensPorPaginacaoNaAPi(){
