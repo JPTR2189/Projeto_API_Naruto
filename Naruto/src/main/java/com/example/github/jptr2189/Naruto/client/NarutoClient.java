@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -94,6 +95,9 @@ public class NarutoClient {
 
     public Mono<PersonagemResponse> getPersonagemByName(String name) {
 
+        WebClient.Builder builder = WebClient.builder();
+        webClient = builder.baseUrl("https://narutodb.xyz/api").build();
+
         log.info("Buscando personagem com o nome [{}]", name);
 
         return webClient
@@ -155,6 +159,9 @@ public class NarutoClient {
 
     public PersonagemResponse getPersonagemFromListById(int id) {
 
+        WebClient.Builder builder = WebClient.builder();
+        webClient = builder.baseUrl("https://narutodb.xyz/api").build();
+
         log.info("Buscando o personagem com o id [{}] na lista", id);
 
         PersonagemResponse personagemErro = new PersonagemResponse();
@@ -178,6 +185,9 @@ public class NarutoClient {
     // Da um GET na Lista "personagensSalvos" e retorna as informações do personagem pelo 'nome'
 
     public PersonagemResponse getPersonagemFromListByName(String nome) {
+
+        WebClient.Builder builder = WebClient.builder();
+        webClient = builder.baseUrl("https://narutodb.xyz/api").build();
 
         log.info("Buscando o personagem com o nome [{}] na lista", nome);
 
@@ -224,6 +234,9 @@ public class NarutoClient {
     // Faz um GET de um personagem pelo 'nome' na API e salva o resultado em uma lista (POST fake)
 
     public List<PersonagemResponse> postPersonagemByName(String name) {
+
+        WebClient.Builder builder = WebClient.builder();
+        webClient = builder.baseUrl("https://narutodb.xyz/api").build();
 
         log.info("Salvando personagem com o nome [{}]", name);
 
@@ -274,6 +287,9 @@ public class NarutoClient {
     // Faz um GET de um personagem pelo 'ID' na API e salva o resultado em uma lista (POST fake)
 
     public List<PersonagemResponse> postPersonagemById(int id) {
+
+        WebClient.Builder builder = WebClient.builder();
+        webClient = builder.baseUrl("https://narutodb.xyz/api").build();
 
         log.info("Salvando personagem com o id [{}]", id);
 
