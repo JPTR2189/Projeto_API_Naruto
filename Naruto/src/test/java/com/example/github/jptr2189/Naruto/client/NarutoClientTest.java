@@ -35,8 +35,7 @@ public class NarutoClientTest {
     @Mock
     private WebClient webClient;
 
-    @Mock
-    private final List<PersonagemResponse> personagensSalvos = new ArrayList<>();
+     List<PersonagemResponse> personagensSalvos = new ArrayList<>();
 
 
     // Teste unitário da função "getPersonagemById"
@@ -136,12 +135,32 @@ public class NarutoClientTest {
 
         personagensSalvos.add(retornoSemMono);
 
-        when(retorno).thenReturn(personagem);
+        when(client.getPersonagemById(personagem.id)).thenReturn(personagem);
 
         assertEquals(retornoSemMono.getId(), personagem.getId());
 
 
     }
+
+
+    // Teste unitário da função "getPersonagemFromListByName"
+
+    @Test
+    void deveBuscarPersonagemNaListaPeloNome(){
+
+       PersonagemResponse personagem = PersonagemResponse.builder().name("Amachi").build();
+
+        client.postPersonagemByName(personagem.name);
+
+        PersonagemResponse personagemLista = client.getPersonagemFromListByName(personagem.name);
+
+        when(client.getPersonagemByName(personagem.getName())).thenReturn(personagem);
+
+        assertEquals(personagemLista.getName(), personagem.getName());
+
+    }
+
+
 
 
 }
