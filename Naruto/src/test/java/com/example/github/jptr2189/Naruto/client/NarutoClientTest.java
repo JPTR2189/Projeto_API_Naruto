@@ -130,14 +130,14 @@ public class NarutoClientTest {
 
         PersonagemResponse personagem = PersonagemResponse.builder().id(55).build();
 
-        Mono<PersonagemResponse> retorno = client.getPersonagemById(personagem.id);
-        PersonagemResponse retornoSemMono = retorno.block();
+        client.postPersonagemById(personagem.id);
 
-        personagensSalvos.add(retornoSemMono);
+        PersonagemResponse personagemLista = client.getPersonagemFromListById(personagem.id);
 
-        when(client.getPersonagemById(personagem.id)).thenReturn(personagem);
+        when(client.getPersonagemById(personagem.getId())).thenReturn(personagem);
 
-        assertEquals(retornoSemMono.getId(), personagem.getId());
+        assertEquals(personagemLista.getId(), personagem.getId());
+
 
 
     }
