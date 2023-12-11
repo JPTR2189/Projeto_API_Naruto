@@ -159,6 +159,27 @@ public class NarutoController {
 
     }
 
+    // Documenta a funcionalidade "getListaPersonagens" no Swagger
+    @Operation(summary = "Retorna a lista de personagens salvos", method = "GET")
+
+    @ApiResponses(value = {
+
+            @ApiResponse(responseCode = "200", description = "Lista retornada com êxito"),
+            @ApiResponse(responseCode = "500", description = "Erro ao retornar a lista"),
+    })
+
+
+// Define o endpoint para utilizar a função "getListaPersonagens"
+
+    @GetMapping(value = "/list/all", produces = "application/json")
+
+    public List<PersonagemResponse> getListaPersonagens(){
+
+        return narutoClient.getListaPersonagens();
+
+    }
+
+
 
 
     // Documenta a funcionalidade "postPersonagemByName" no Swagger
