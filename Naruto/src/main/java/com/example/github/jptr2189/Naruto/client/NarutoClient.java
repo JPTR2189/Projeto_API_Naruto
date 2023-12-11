@@ -209,6 +209,17 @@ public class NarutoClient {
 
     }
 
+    // Retorna a lista "PersonagensSalvos"
+
+    public List<PersonagemResponse> getListaPersonagens(){
+
+        log.info("Retornando a lista Personagens Salvos");
+
+
+        return personagensSalvos;
+
+    }
+
 
     // Converte o Json em um Objeto Java com o "ObjectMapper"
 
