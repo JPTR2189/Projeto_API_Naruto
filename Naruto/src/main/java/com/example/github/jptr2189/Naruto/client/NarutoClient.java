@@ -480,7 +480,7 @@ public class NarutoClient {
     public List<PersonagemResponse> putPersonagemById(int id, String nome, String sexo, int idade, String clan,
                                                       ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
 
-        log.info("Deletando personagem com o id [{}]", id);
+        log.info("Editando personagem com o id [{}]", id);
 
         boolean personagemEncontrado = false;
 
@@ -518,7 +518,7 @@ public class NarutoClient {
     public List<PersonagemResponse> putPersonagemByName(String nome, int id, String sexo, int idade, String clan,
                                                       ArrayList<String> jutsu, ArrayList<String> TipoNatural, ArrayList<String> Ferramentas) {
 
-        log.info("Deletando personagem com o nome [{}]", nome);
+        log.info("Editando personagem com o nome [{}]", nome);
 
         boolean personagemEncontrado = false;
 

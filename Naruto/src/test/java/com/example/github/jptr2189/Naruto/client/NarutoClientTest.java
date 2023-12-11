@@ -296,6 +296,26 @@ public class NarutoClientTest {
     }
 
 
+    // Teste unitário da função "putPersonagemById"
+
+    @Test
+    void deveEditarUmPersonagemDaListaPeloID(){
+
+        client.postPersonagemById(55);
+        client.putPersonagemById(55, "Jobson", "Masculino", 25, "Uchia", new ArrayList<>(List.of("Hazenga")), new ArrayList<>(List.of("Hokague")), new ArrayList<>(List.of("Shuriken")));
+
+        PersonagemResponse personagem = client.getPersonagemFromListById(55);
+
+        Mono<PersonagemResponse> personagemMono = Mono.just(personagem);
+
+        when(personagemMono).thenReturn(personagem);
+
+        assertEquals(personagem.getName(), "Jobson");
+
+    }
+
+
+
 
 
 
