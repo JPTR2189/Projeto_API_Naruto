@@ -161,6 +161,16 @@ public class NarutoController {
     }
 
 
+    // Define o endpoint para utilizar a função "getListaPersonagens"
+
+    @GetMapping(value = "/list/all", produces = "application/json")
+
+    public List<PersonagemResponse> getListaPersonagens(){
+
+        return narutoClient.getListaPersonagens();
+
+    }
+
 
     // Documenta a funcionalidade "postPersonagemByName" no Swagger
 
