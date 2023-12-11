@@ -88,7 +88,7 @@ public class NarutoController {
 
     // Documenta a funcionalidade getAllPersonagens" no Swagger
 
-    @Operation(summary = "Busca os dados dos 20 primeiros personagens na API", method = "GET")
+    @Operation(summary = "Busca os dados dos personagens de acordo com os parâmetros 'página' e 'tamanho' na API", method = "GET")
 
     @ApiResponses(value = {
 
@@ -240,7 +240,6 @@ public class NarutoController {
     @ApiResponses(value = {
 
             @ApiResponse(responseCode = "200", description = "Personagem salvo"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos "),
             @ApiResponse(responseCode = "500", description = "Erro ao salvar o personagem"),
     })
@@ -249,7 +248,7 @@ public class NarutoController {
 
     // Configura o acesso do endpoint na URL para utilizar a funcionalidade "postNewPersonagem"
 
-    @PostMapping("/post/new/{nome}/{id}/{sexo}/{idade}/{jutsu}/{TipoNatural}/{Ferramentas}")
+    @PostMapping("/post/new")
 
     public List<PersonagemResponse> postNewPersonagem(@RequestBody PersonagemResponse personagem, @RequestParam String nome, @RequestParam int id, @RequestParam String sexo, @RequestParam int idade,
                                                   @RequestParam String clan , @RequestParam ArrayList<String> jutsu , @RequestParam ArrayList<String> tipoNatural, @RequestParam ArrayList<String> ferramentas) {
@@ -266,7 +265,6 @@ public class NarutoController {
     @ApiResponses(value = {
 
             @ApiResponse(responseCode = "200", description = "Personagem com o 'ID' espicíficado deletado"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "400", description = "'ID' inválido"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
@@ -291,7 +289,6 @@ public class NarutoController {
     @ApiResponses(value = {
 
             @ApiResponse(responseCode = "200", description = "Personagem com o 'nome' espicíficado deletado"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "400", description = "'nome' inválido"),
             @ApiResponse(responseCode = "500", description = "Erro ao realizar o salvamento do personagem"),
     })
@@ -316,7 +313,6 @@ public class NarutoController {
     @ApiResponses(value = {
 
             @ApiResponse(responseCode = "200", description = "Lista limpada com éxito"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
             @ApiResponse(responseCode = "500", description = "Erro ao limpar a lista"),
     })
 
@@ -340,7 +336,7 @@ public class NarutoController {
     @ApiResponses(value = {
 
             @ApiResponse(responseCode = "200", description = "Personagem Editado"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "'ID' inválido"),
             @ApiResponse(responseCode = "500", description = "Erro ao editar o personagem"),
     })
 
@@ -366,7 +362,7 @@ public class NarutoController {
     @ApiResponses(value = {
 
             @ApiResponse(responseCode = "200", description = "Personagem Editado"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "'nome' inválido"),
             @ApiResponse(responseCode = "500", description = "Erro ao editar o personagem"),
     })
 
