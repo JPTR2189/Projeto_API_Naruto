@@ -160,6 +160,23 @@ public class NarutoClientTest {
 
     }
 
+    // Teste unitário da função "postPersonagemById"
+
+    @Test
+    void deveSalvarPersonagemDaAPINaListaPeloID(){
+        PersonagemResponse personagem = PersonagemResponse.builder().id(113).build();
+
+        client.postPersonagemById(personagem.id);
+
+        PersonagemResponse personagemLista = client.getPersonagemFromListById(personagem.id);
+
+        when(client.getPersonagemById(personagem.getId())).thenReturn(personagem);
+
+        assertEquals(personagemLista.getId(), personagem.getId());
+
+
+    }
+    
 
 
 
