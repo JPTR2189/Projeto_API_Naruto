@@ -227,4 +227,27 @@ public class NarutoClientTest {
     }
 
 
+    // Teste unitário da função "deletePersonagemById"
+
+    @Test
+    void deveDeletarUmPersonagemNaListaPeloId(){
+        PersonagemResponse personagem = PersonagemResponse.builder().id(55).build();
+
+        client.postPersonagemById(55);
+        client.deletePersonagemById(55);
+
+        Mono<List<PersonagemResponse>> listaMono = Mono.just(client.getPersonagensSalvos());
+
+        when(listaMono).thenReturn(new ArrayList<>());
+
+        assertEquals(client.getListaPersonagens(), new ArrayList<>());
+
+
+    }
+
+
+
+
+
+
 }
