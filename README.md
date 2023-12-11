@@ -5,18 +5,17 @@
 
 > Status: Em Desenvolvimento  ⚠️
 ## Esse é um projeto desenvolvido com o curso de JAVA do instituto Eldorado em parceria com o instituto Caldeira de Porto Alegre . 🏢 🚀
-### Se trata de uma aplicação Back-end com uma conexão API externa ao site https://narutodb.xyz/api com intuito de conhecermos um pouco mais dos personagens do univero Naruto. 🐱‍👤
+### Se trata de uma aplicação Back-end com uma conexão API externa ao site do **[Naruto](https://narutodb.xyz/api)** com intuito de conhecermos um pouco mais dos personagens do univero Naruto. 🐱‍👤
 
 ## Chaves dos personagens 🔑:
-+ name (String) ; 
-+ images (String) ; 
-+ debut (Objects) ;
-+ personal (Objects) ;
-+ family (Objects) ;
++ name (String) ;
++ id (Int)
++ personal (sex, age, clan) ;
 + jutsu (Array) ;
 + natureType (Array) ;
-+ uniqueTraits (Array) ;
-+ voiceActors (Objects) ;
++ tools (Array)
+
+
 
 
 ## Tecnologias usadas 💻:
