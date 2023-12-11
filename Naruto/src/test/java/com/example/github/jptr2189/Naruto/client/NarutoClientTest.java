@@ -277,6 +277,25 @@ public class NarutoClientTest {
 
     }
 
+    // Teste unitário da função "cleanDelete"
+
+    @Test
+    void deveLimparAListaDePersonagens(){
+
+        client.postPersonagemByName("Amachi");
+        client.postPersonagemByName("Futsu");
+        client.cleanDelete();
+
+        Mono<List<PersonagemResponse>> listaMono = Mono.just(client.getPersonagensSalvos());
+
+        when(listaMono).thenReturn(new ArrayList<>());
+
+        assertEquals(client.getListaPersonagens(), new ArrayList<>());
+
+
+    }
+
+
 
 
 
