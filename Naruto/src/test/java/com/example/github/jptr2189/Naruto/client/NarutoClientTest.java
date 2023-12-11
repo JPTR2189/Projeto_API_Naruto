@@ -176,7 +176,25 @@ public class NarutoClientTest {
 
 
     }
-    
+
+    // Teste unitário da função "postPersonagemByName"
+
+    @Test
+    void deveSalvarPersonagemDaAPINaListaPeloNome(){
+        PersonagemResponse personagem = PersonagemResponse.builder().name("Bandō").build();
+
+        client.postPersonagemByName(personagem.name);
+
+        PersonagemResponse personagemLista = client.getPersonagemFromListByName(personagem.name);
+
+        when(client.getPersonagemByName(personagem.getName())).thenReturn(personagem);
+
+        assertEquals(personagemLista.getName(), personagem.getName());
+
+
+    }
+
+
 
 
 
