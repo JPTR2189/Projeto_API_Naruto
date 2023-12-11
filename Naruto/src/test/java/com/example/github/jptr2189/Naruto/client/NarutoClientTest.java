@@ -1,6 +1,7 @@
 package com.example.github.jptr2189.Naruto.client;
 
 import com.example.github.jptr2189.Naruto.response.PersonagemResponse;
+import com.example.github.jptr2189.Naruto.response.Personal;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 import static reactor.core.publisher.Mono.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,6 +36,9 @@ public class NarutoClientTest {
 
     @Mock
     private WebClient webClient;
+
+    @Mock
+    PersonagemResponse personagemResponse;
 
      List<PersonagemResponse> personagensSalvos = new ArrayList<>();
 
@@ -194,8 +199,32 @@ public class NarutoClientTest {
 
     }
 
+    // Teste unitário da função "postNewPersonagem"
+
+    @Test
+    void deveCriarESalvarUmNovoPersonagemNaLista(){
+        PersonagemResponse personagem = PersonagemResponse.builder().name("Narutinho").id(1600).jutsu(new ArrayList<>(List.of("Hazenga"))).natureType(new ArrayList<>(List.of("Hokague"))).tools(new ArrayList<>(List.of("Shuriken"))).build();
+        Personal personal = new Personal();
+        personagem.setPersonal(personal);
+
+        personal.setAge(17);
+        personal.setClan("Kakei");
+        personal.setSex("Masculino");
 
 
+        client.postNewPersonagem("Narutinho", 1600, "Masculino", 17, "Kakei", new ArrayList<>(List.of("Hazenga")), new ArrayList<>(List.of("Hokague")), new ArrayList<>(List.of("Shuriken")));
+
+        PersonagemResponse personagemLista = client.getPersonagemFromListByName(personagem.name);
+
+        Mono<PersonagemResponse> personagemMono = Mono.just(personagemLista);
+
+        when(personagemMono).thenReturn(personagem);
+
+        assertEquals(personagemLista.getName(), personagem.getName());
+        assertEquals(personagemLista.getId(), personagem.getId());
+
+
+    }
 
 
 }
