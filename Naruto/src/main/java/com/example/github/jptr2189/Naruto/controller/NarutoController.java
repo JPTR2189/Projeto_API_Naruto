@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -87,6 +88,7 @@ public class NarutoController {
 
 
     // Documenta a funcionalidade getAllPersonagens" no Swagger
+
 
     @Operation(summary = "Busca os dados dos personagens de acordo com os parâmetros 'página' e 'tamanho' na API", method = "GET")
 
@@ -180,6 +182,16 @@ public class NarutoController {
     }
 
 
+
+    // Define o endpoint para utilizar a função "getListaPersonagens"
+
+    @GetMapping(value = "/list/all", produces = "application/json")
+
+    public List<PersonagemResponse> getListaPersonagens(){
+
+        return narutoClient.getListaPersonagens();
+
+    }
 
 
     // Documenta a funcionalidade "postPersonagemByName" no Swagger
