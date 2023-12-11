@@ -3,8 +3,7 @@ package com.example.github.jptr2189.Naruto.response;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -12,7 +11,9 @@ import java.io.Serializable;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Personal implements Serializable {
 
     @JsonProperty("sex")
