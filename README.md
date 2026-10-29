@@ -3,8 +3,8 @@
 ![characters](https://github.com/JPTR2189/Projeto_API_Naruto/assets/80178978/381606a3-bd70-4daf-b25c-8d38bd7d9249)
 
 
-## Esse é um projeto desenvolvido com o curso de JAVA do instituto Eldorado em parceria com o instituto Caldeira de Porto Alegre . 🏢 🚀
-### Se trata de uma aplicação Back-end com uma conexão API externa ao site do **[Naruto](https://narutodb.xyz/api)** com intuito de conhecermos um pouco mais dos personagens do univero Naruto. 🐱‍👤
+## Esse é um projeto desenvolvido com o curso de JAVA do instituto Eldorado em parceria com o instituto Caldeira de Porto Alegre . 
+### Se trata de uma aplicação Back-end com uma conexão API externa ao site do **[Naruto](https://narutodb.xyz/api)** com intuito de conhecermos um pouco mais dos personagens do univero Naruto.
 
 ## Chaves dos personagens 🔑:
 + name (String) ;
